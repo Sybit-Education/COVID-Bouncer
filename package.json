@@ -1,7 +1,7 @@
 {
   "name": "covid-bouncer",
   "version": "0.0.1",
-  "description": "A hackathon projekt that allows you to book team rooms",
+  "description": "A Quasar Framework app",
   "productName": "Quasar App",
   "author": "sybit",
   "private": true,
