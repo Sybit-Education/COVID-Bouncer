@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="room in roomList" :key="room.id">
-      <div>{{ rooe.title }}</div>
+      <h1>{{ room.maxPerson }}</h1>
     </div>
   </div>
 </template>

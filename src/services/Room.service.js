@@ -1,25 +1,25 @@
-import 'firebase/firestore'
-import '../firebase-config'
+import { $db } from '../services/firebase'
 
 const COLLECTION_NAME = 'Room'
 
-export class RoomService {
+export default {
   getRoomList () {
     const list = []
-    $db
+    $db()
       .collection(COLLECTION_NAME)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           list.push({
             id: doc.id,
-            title: doc.data().title
+            name: doc.data().name,
+            maxPerson: doc.data().maxPerson,
+            qrCode: doc.data().qrCode
           })
-          console.log('Room: ' + doc)
         })
       })
       .catch((error) => {
-        console.err('Error getting room list: ' + error)
+        console.log('Error getting room list: ' + error)
       })
     return list
   }

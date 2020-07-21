@@ -4,7 +4,7 @@
       alt="Quasar logo"
       src="~assets/quasar-logo-full.svg"
     >
-    <room-list />
+    <RoomList />
   </q-page>
 </template>
 
@@ -12,9 +12,9 @@
 import RoomList from '../components/RoomList.vue'
 export default {
   name: 'PageIndex',
-  components: [
+  components: {
     RoomList
-  ]
+  }
 
 }
 </script>
