@@ -1,20 +1,25 @@
 <template>
-  <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-full.svg"
-    >
-    <room-list />
-  </q-page>
+  <div class=main-container>
+    <div>
+      <h3>COVID Bouncer</h3>
+    </div>
+    <headline></headline>
+    <div>
+      <roomItem></roomItem>
+    </div>
+  </div>
 </template>
 
 <script>
-import RoomList from '../components/RoomList.vue'
+import roomItem from 'components/roomItem'
+import headline from 'components/headline'
 export default {
   name: 'PageIndex',
-  components: [
-    RoomList
-  ]
-
+  components: { roomItem, headline }
 }
 </script>
+
+<style lang="sass" scoped>
+.main-container
+  padding: 0px 8px
+</style>
