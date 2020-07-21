@@ -1,4 +1,3 @@
-import Vue from 'vue'
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
 import firebase from 'firebase/app'
@@ -16,10 +15,8 @@ const firebaseConfig = {
   measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_ID
 }
 firebase.initializeApp(firebaseConfig)
-export const $db = firebase.firestore()
 
-// To apply the default browser preference instead of explicitly setting it.
-$auth.useDeviceLanguage()
+export const $db = firebase.firestore()
 
 // Export types that exists in Firestore
 // This is not always necessary, but it's used in other examples
