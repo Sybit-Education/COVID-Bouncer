@@ -1,8 +1,8 @@
 {
   "name": "covid-bouncer",
   "version": "0.0.1",
-  "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "description": "A COVID Bouncer app",
+  "productName": "COVID Bouncer",
   "author": "sybit",
   "private": true,
   "scripts": {
