@@ -24,7 +24,6 @@ export default {
     },
     description: {
       type: String,
-      required: true,
       default: 'Arlanxeo'
     }
   },
@@ -34,6 +33,7 @@ export default {
       loadFactor: '5/10'
     }
   }
+
 }
 </script>
 
