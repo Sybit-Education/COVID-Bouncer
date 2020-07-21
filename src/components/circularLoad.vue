@@ -1,10 +1,9 @@
 <template>
       <q-circular-progress
       show-value
-      class="text-light-blue"
       :value="value"
       size="40px"
-      color="light-blue"
+      color= $secondary
     >{{ loadFactor }}</q-circular-progress>
 </template>
 

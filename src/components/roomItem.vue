@@ -25,15 +25,23 @@ export default {
     description: {
       type: String,
       default: 'Arlanxeo'
+    },
+    capacity: {
+      default: 10
+    },
+    currentSituation: {
+      default: 4
     }
   },
-  data () {
-    return {
-      value: 81,
-      loadFactor: '5/10'
+  computed: {
+    loadFactor () {
+      return this.currentSituation + '/' + this.capacity
+    },
+    value () {
+      const factor = 100 / this.capacity
+      return factor * this.currentSituation
     }
   }
-
 }
 </script>
 
