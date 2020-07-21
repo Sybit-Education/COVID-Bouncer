@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import 'firebase/firestore'
 
 /**
  * Gets Firebase's auth service
@@ -17,4 +18,8 @@ export const auth = () => {
  */
 export const fBInit = (config) => {
   return firebase.initializeApp(config)
+}
+
+export const $db = () => {
+  return firebase.firestore()
 }
