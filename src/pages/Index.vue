@@ -17,7 +17,7 @@ export default {
     }
   },
   methods: {
-    toggle: function () {
+    toggle () {
       this.isOpen = !this.isOpen
     }
   }
