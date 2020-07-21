@@ -1,18 +1,22 @@
 <template>
-  <div>
+  <div v-if="roomList">
     <div v-for="room in roomList" :key="room.id">
-      <h1>{{ room.maxPerson }}</h1>
+      <roomItem :roomName="room.name" :description="Test" :capacity="room.maxPerson" :currentSituation="1"></roomItem>
     </div>
   </div>
 </template>
 
 <script>
 import RoomService from '../services/Room.service'
+import roomItem from './roomItem'
 
 export default {
+  components: { roomItem },
   computed: {
     roomList () {
-      return RoomService.getRoomList()
+      const response = RoomService.getRoomList()
+      console.log(response)
+      return response
     }
   }
 }
