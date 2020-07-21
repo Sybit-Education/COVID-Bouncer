@@ -1,9 +1,7 @@
 <template>
   <div>
     <p class="error">{{ error }}</p>
-
-    <p class="decode-result">Last result: <b>{{ result }}</b></p>
-
+    <p class="decode-result">Letztes Ergebnis: <b>{{ result }}</b></p>
     <qrcode-stream @decode="onDecode" @init="onInit" />
   </div>
 </template>
