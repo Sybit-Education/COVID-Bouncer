@@ -6,12 +6,15 @@
     <div class="col-6 description">
       {{ description }}
     </div>
-    <div class="col loadFactor">{{ loadFactor }}</div>
+    <div class="col loadFactor"><circularLoad :value="value" :loadFactor="loadFactor"></circularLoad></div>
   </div>
 </template>
 
 <script>
+import circularLoad from './circularLoad.vue'
+
 export default {
+  components: { circularLoad },
   name: 'roomItem',
   props: {
     room: {
@@ -23,11 +26,12 @@ export default {
       type: String,
       required: true,
       default: 'Arlanxeo'
-    },
-    loadFactor: {
-      type: String,
-      required: true,
-      default: '5/10'
+    }
+  },
+  data () {
+    return {
+      value: 81,
+      loadFactor: '5/10'
     }
   }
 }
@@ -41,6 +45,7 @@ export default {
   font-size: 16px
   border-radius: 8px
   margin-top: 8px
+  line-height: 40px
 
 .room
   font-weight: bold
