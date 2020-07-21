@@ -1,10 +1,7 @@
 <template>
   <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-full.svg"
-    >
-    <Scanner></Scanner>
+    <button @click="toggle()">QR-Code Scannen</button>
+    <Scanner v-if="isOpen"></Scanner>
   </q-page>
 </template>
 
@@ -12,6 +9,16 @@
 import Scanner from 'components/Scanner'
 export default {
   name: 'PageIndex',
-  components: { Scanner }
+  components: { Scanner },
+  data () {
+    return {
+      isOpen: false
+    }
+  },
+  methods: {
+    toggle: function () {
+      this.isOpen = !this.isOpen
+    }
+  }
 }
 </script>
