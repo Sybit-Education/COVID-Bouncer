@@ -108,4 +108,5 @@ dist
 .idea/modules.xml
 .idea/vcs.xml
 .idea/workspace.xml
+.idea/COVID-Bouncer.iml
 *.local
