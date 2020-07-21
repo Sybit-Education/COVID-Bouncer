@@ -3,9 +3,9 @@ import { $db } from '../services/firebase'
 const COLLECTION_NAME = 'Room'
 
 export default {
-  getRoomList () {
+  async getRoomList () {
     const list = []
-    $db()
+    await $db()
       .collection(COLLECTION_NAME)
       .get()
       .then((querySnapshot) => {
@@ -22,5 +22,9 @@ export default {
         console.log('Error getting room list: ' + error)
       })
     return list
+  },
+  async getRoomByQrCodeScanner (qrCode) {
+    const roomList = await this.getRoomList()
+    return roomList.filter(room => room.qrCode === qrCode)
   }
 }
