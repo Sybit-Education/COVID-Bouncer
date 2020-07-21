@@ -110,7 +110,7 @@ module.exports = function (/* ctx */) {
       manifest: {
         name: 'Quasar App',
         short_name: 'Quasar App',
-        description: 'A hackathon projekt that allows you to book team rooms',
+        description: 'A Quasar Framework app',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',

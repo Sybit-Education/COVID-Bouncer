@@ -1,6 +1,6 @@
 # Quasar App (covid-bouncer)
 
-A hackathon projekt that allows you to book team rooms
+A Quasar Framework app
 
 ## Install the dependencies
 ```bash
