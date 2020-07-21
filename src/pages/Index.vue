@@ -4,18 +4,19 @@
       <h3>COVID Bouncer</h3>
     </div>
     <headline></headline>
-    <div>
-      <roomItem></roomItem>
+    <div class="roomList">
+      <roomList></roomList>
     </div>
   </div>
 </template>
 
 <script>
-import roomItem from 'components/roomItem'
+import roomList from 'components/roomList'
 import headline from 'components/headline'
+
 export default {
   name: 'PageIndex',
-  components: { roomItem, headline }
+  components: { roomList, headline }
 }
 </script>
 

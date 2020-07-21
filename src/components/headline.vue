@@ -19,7 +19,7 @@ export default {
 
 <style lang="sass" scoped>
 .headline
-  color: $secondary
+  color: $primary
   margin: 16px 0px
   font-weight: bold
   font-size: 16px
