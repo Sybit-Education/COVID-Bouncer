@@ -19,18 +19,14 @@ export default {
   props: {
     roomName: {
       type: String,
-      required: true,
-      default: '4.05'
+      required: true
     },
     description: {
-      type: String,
-      default: 'Arlanxeo'
+      type: String
     },
     capacity: {
-      default: 10
     },
     currentSituation: {
-      default: 6
     }
   },
   computed: {

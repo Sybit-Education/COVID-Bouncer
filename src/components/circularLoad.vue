@@ -12,9 +12,6 @@ export default {
   name: 'roomItem',
   props: {
     loadFactor: {
-      type: String,
-      required: true,
-      default: '5/10'
     },
     value: {
     }
