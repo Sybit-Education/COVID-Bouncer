@@ -114,3 +114,6 @@ dist
 .idea/workspace.xml
 .idea/COVID-Bouncer.iml
 *.local
+
+.env
+.env.production
