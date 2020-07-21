@@ -30,7 +30,7 @@ export default {
       default: 10
     },
     currentSituation: {
-      default: 4
+      default: 6
     }
   },
   computed: {
@@ -38,8 +38,7 @@ export default {
       return this.currentSituation + '/' + this.capacity
     },
     value () {
-      const factor = 100 / this.capacity
-      return factor * this.currentSituation
+      return (100 / this.capacity) * this.currentSituation
     }
   }
 }
