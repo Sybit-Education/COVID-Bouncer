@@ -1,12 +1,12 @@
 <template>
   <div class="row roomItem--background">
     <div class="col room">
-      {{ room }}
+      {{ roomName }}
     </div>
     <div class="col-6 description">
       {{ description }}
     </div>
-    <div class="col loadFactor"><circularLoad :value="value" :loadFactor="loadFactor"></circularLoad></div>
+    <div class="col-2 loadFactor"><circularLoad :value="value" :loadFactor="loadFactor"></circularLoad></div>
   </div>
 </template>
 
@@ -17,20 +17,16 @@ export default {
   components: { circularLoad },
   name: 'roomItem',
   props: {
-    room: {
+    roomName: {
       type: String,
-      required: true,
-      default: '4.05'
+      required: true
     },
     description: {
-      type: String,
-      default: 'Arlanxeo'
+      type: String
     },
     capacity: {
-      default: 10
     },
     currentSituation: {
-      default: 6
     }
   },
   computed: {

@@ -80,11 +80,11 @@ export default {
       this.signInForm.initials = this.signInForm.initials.toLowerCase()
       userService
         .signIn(this.signInForm)
-        .then(userId => {
+        .then(() => {
           this.$router.push({ name: 'home' })
         })
         .catch(e => {
-          console.log(e)
+          this.signInForm.masterPassword = ''
           this.showNotification(e)
         })
     },
@@ -94,7 +94,6 @@ export default {
         message,
         color: 'negative',
         position: 'top',
-        actions: { label: 'Ok', color: 'white', handler: () => { /* console.log('wooow') */ } },
         timeout: 10000
       })
     }

@@ -4,8 +4,8 @@
       <h3>COVID Bouncer</h3>
     </div>
     <headline></headline>
-    <div>
-      <roomItem></roomItem>
+    <div class="roomList">
+      <roomList></roomList>
     </div>
     <div>
       <QrScannerIcon></QrScannerIcon>
@@ -14,12 +14,13 @@
 </template>
 
 <script>
-import roomItem from 'components/roomItem'
+import roomList from 'components/roomList'
 import headline from 'components/headline'
 import QrScannerIcon from 'components/QrScannerIcon'
+
 export default {
   name: 'PageIndex',
-  components: { roomItem, headline, QrScannerIcon }
+  components: { roomList, headline, QrScannerIcon }
 }
 </script>
 
