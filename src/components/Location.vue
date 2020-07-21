@@ -8,7 +8,7 @@
         <div class="col text" @click="switchLocation(4)">offenbach</div>
         </div>
     </div>
-    <locationItem></locationItem>
+    <locationItem :location="location"></locationItem>
 </div>
 </template>
 

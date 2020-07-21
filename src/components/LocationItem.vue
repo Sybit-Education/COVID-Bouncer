@@ -4,7 +4,11 @@
 
 <script>
 export default {
-
+  props: {
+    location: {
+      type: String
+    }
+  }
 }
 </script>
 

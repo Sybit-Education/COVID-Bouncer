@@ -3,9 +3,6 @@
     <div>
       <h3>COVID Bouncer</h3>
     </div>
-    <div>
-      <location></location>
-    </div>
     <headline></headline>
     <div>
       <roomItem></roomItem>
@@ -14,12 +11,11 @@
 </template>
 
 <script>
-import location from 'components/Location.vue'
 import roomItem from 'components/roomItem'
 import headline from 'components/headline'
 export default {
   name: 'PageIndex',
-  components: { location, roomItem, headline }
+  components: { roomItem, headline }
 }
 </script>
 
