@@ -17,6 +17,7 @@
     "core-js": "^3.6.5",
     "firebase": "^7.16.1",
     "quasar": "^1.0.0"
+    "vue-qrcode-reader": "^2.3.10"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",
