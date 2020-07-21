@@ -1,3 +1,4 @@
+import { userService } from 'src/services/User.service'
 
 const routes = [
   {
@@ -17,7 +18,14 @@ const routes = [
       {
         name: 'signin',
         path: '/signin',
-        component: () => import('pages/SignIn')
+        component: () => import('pages/SignIn'),
+        beforeEnter: (to, from, next) => {
+          if (userService.isLoggedIn()) {
+            next({ name: 'home' })
+          } else {
+            next()
+          }
+        }
       }
     ]
   },
