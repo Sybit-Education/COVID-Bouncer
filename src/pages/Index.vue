@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <button @click="toggle()">QR-Code Scannen</button>
+    <q-btn color="primary" @click="toggle()">QR-Code Scannen</q-btn>
     <Scanner v-if="isOpen"></Scanner>
   </q-page>
 </template>
