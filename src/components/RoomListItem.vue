@@ -6,16 +6,18 @@
     <div class="col-6 description">
       {{ description }}
     </div>
-    <div class="col-2 loadFactor"><circularLoad :value="value" :loadFactor="loadFactor"></circularLoad></div>
+    <div class="col-2 loadFactor">
+      <circular-Load :value="value" :loadFactor="loadFactor" />
+    </div>
   </div>
 </template>
 
 <script>
-import circularLoad from './circularLoad.vue'
+import CircularLoad from './CircularLoad.vue'
 
 export default {
-  components: { circularLoad },
-  name: 'roomItem',
+  components: { CircularLoad },
+  name: 'RoomItem',
   props: {
     roomName: {
       type: String,

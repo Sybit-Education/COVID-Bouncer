@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'roomItem',
+  name: 'CircularLoad',
   props: {
     loadFactor: {
     },

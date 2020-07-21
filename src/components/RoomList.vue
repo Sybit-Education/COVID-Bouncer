@@ -1,17 +1,20 @@
 <template>
   <div v-if="roomList">
     <div v-for="room in roomList" :key="room.id">
-      <roomItem :roomName="room.name" description="Test" :capacity="room.maxPerson" :currentSituation="1"></roomItem>
+      <room-list-item
+        :roomName="room.name"
+        description="Test" :capacity="room.maxPerson"
+        :currentSituation="1" />
     </div>
   </div>
 </template>
 
 <script>
-import RoomService from '../services/Room.service'
-import roomItem from './roomItem'
+import { roomService } from '../services/Room.service'
+import RoomListItem from './RoomListItem'
 
 export default {
-  components: { roomItem },
+  components: { RoomListItem },
   data () {
     return {
       roomList: []
