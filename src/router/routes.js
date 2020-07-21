@@ -10,11 +10,6 @@ const routes = [
         component: () => import('pages/Index.vue')
       },
       {
-        name: 'scanner',
-        path: '/scanner',
-        component: () => import('pages/ScannerPage.vue')
-      },
-      {
         name: 'signin',
         path: '/signin',
         component: () => import('pages/SignIn')

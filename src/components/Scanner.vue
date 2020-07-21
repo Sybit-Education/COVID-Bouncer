@@ -22,7 +22,8 @@ export default {
     onDecode (result) {
       this.result = result
       // eslint-disable-next-line no-unused-vars
-      const roomByQrCodeScanner = RoomService.getRoomByQrCodeScanner(result);
+      const roomByQrCodeScanner = RoomService.getRoomByQrCodeScanner(result)
+      console.log('onDecode -> roomByQrCodeScanner', roomByQrCodeScanner)
     },
     async onInit (promise) {
       try {
