@@ -1,7 +1,7 @@
 <template>
   <div v-if="roomList">
     <div v-for="room in roomList" :key="room.id">
-      <roomItem :roomName="room.name" :description="Test" :capacity="room.maxPerson" :currentSituation="1"></roomItem>
+      <roomItem :roomName="room.name" description="Test" :capacity="room.maxPerson" :currentSituation="1"></roomItem>
     </div>
   </div>
 </template>
@@ -12,12 +12,13 @@ import roomItem from './roomItem'
 
 export default {
   components: { roomItem },
-  computed: {
-    roomList () {
-      const response = RoomService.getRoomList()
-      console.log(response)
-      return response
+  data () {
+    return {
+      roomList: []
     }
+  },
+  created () {
+    RoomService.getRoomList().then(data => { this.roomList = data })
   }
 }
 </script>
