@@ -8,7 +8,7 @@
 
 <script>
 import { QrcodeStream } from 'vue-qrcode-reader'
-import RoomService from '../services/Room.service'
+import { roomService } from '../services/Room.service'
 
 export default {
   components: { QrcodeStream },
@@ -22,7 +22,7 @@ export default {
     onDecode (result) {
       this.result = result
       // eslint-disable-next-line no-unused-vars
-      const roomByQrCodeScanner = RoomService.getRoomByQrCodeScanner(result)
+      const roomByQrCodeScanner = roomService.getRoomByQrCodeScanner(result)
     },
     async onInit (promise) {
       try {

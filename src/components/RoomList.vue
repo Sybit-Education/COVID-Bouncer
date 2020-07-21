@@ -21,7 +21,7 @@ export default {
     }
   },
   created () {
-    RoomService.getRoomList().then(data => { this.roomList = data })
+    roomService.getRoomList().then(data => { this.roomList = data })
   }
 }
 </script>
