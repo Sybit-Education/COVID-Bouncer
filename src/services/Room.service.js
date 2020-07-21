@@ -1,7 +1,7 @@
 import 'firebase/firestore'
 import '../firebase-config'
 
-const COLLECTION_NAME = 'room'
+const COLLECTION_NAME = 'Room'
 
 export class RoomService {
   getRoomList () {
