@@ -9,7 +9,7 @@
 import Scanner from 'components/Scanner'
 
 export default {
-  name: 'Scanner',
+  name: 'ScannerPage',
   components: { Scanner },
   data () {
     return {
