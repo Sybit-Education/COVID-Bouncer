@@ -7,16 +7,20 @@
     <div class="roomList">
       <roomList></roomList>
     </div>
+    <div>
+      <QrScannerIcon></QrScannerIcon>
+    </div>
   </div>
 </template>
 
 <script>
 import roomList from 'components/roomList'
 import headline from 'components/headline'
+import QrScannerIcon from 'components/QrScannerIcon'
 
 export default {
   name: 'PageIndex',
-  components: { roomList, headline }
+  components: { roomList, headline, QrScannerIcon }
 }
 </script>
 
