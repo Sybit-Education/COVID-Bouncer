@@ -1,6 +1,9 @@
 <template>
   <div class=main-container>
     <div>
+      <h3>COVID Bouncer</h3>
+    </div>
+    <div>
       <location></location>
     </div>
     <headline></headline>
