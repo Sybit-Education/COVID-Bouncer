@@ -3,7 +3,7 @@
     <div>
       <h3>COVID Bouncer</h3>
     </div>
-    <headline></headline>
+    <headline headline="Raumliste" />
     <div class="roomList">
       <roomList></roomList>
     </div>
