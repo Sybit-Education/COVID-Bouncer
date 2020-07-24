@@ -21,7 +21,7 @@ export default {
       this.$router.push({ path: `/room/${result}` })
       this.result = result
       // eslint-disable-next-line no-unused-vars
-      const roomByQrCodeScanner = roomService.getRoomByQrCodeScanner(result)
+      const roomByQrCodeScanner = roomService.getRoomByQrCode(result)
     },
     async onInit (promise) {
       try {

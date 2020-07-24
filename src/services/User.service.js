@@ -68,15 +68,18 @@ class UserService {
 
   currentUser () {
     const userId = LocalStorage.getItem('userId')
+    let result = null
 
     if (!userId) {
-      return Promise.resolve(null)
+      result = null
     } else {
       if (this.user && this.user.userId === userId) {
-        return Promise.resolve(this.user)
+        result = this.user
+      } else {
+        result = this.fetchUserById(userId)
       }
-      return this.fetchUserById(userId)
     }
+    return Promise.resolve(result)
   }
 
   isLoggedIn () {
