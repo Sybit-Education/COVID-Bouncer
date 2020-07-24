@@ -67,7 +67,7 @@ class RoomService {
 
     // TODO persist
   }
-  
+
   // async getBookings () {
   //   const list = []
   //   await $db()
@@ -95,7 +95,7 @@ class RoomService {
       id: '1',
       userId: 'TpaP2tncQbQBmz6Tqibc',
       roomId: 'tc1hghW88dMrnKdA72ty',
-      bookingDate: '24.07.2020'
+      bookingDate: '24.7.2020'
     })
     return list
   }
@@ -109,10 +109,11 @@ class RoomService {
     const currentDateFormatted = currentDate.toLocaleDateString('de-DE', options)
     bookingList.forEach(boocking => {
       if (boocking.userId === currentUser && boocking.bookingDate === currentDateFormatted) {
-        const roomList = this.getRoomList()
-        const bookedRoom = roomList.find(room => room.id === boocking.roomId)
-        console.log(bookedRoom)
-        return bookedRoom
+        this.list.forEach(room => {
+          if (room.id === boocking.roomId) {
+            return room
+          }
+        })
       }
     })
   }

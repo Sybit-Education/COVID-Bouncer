@@ -5,7 +5,7 @@
     </div>
     <headline headline="Für heute gebuchter Raum"/>
     <div>
-      <room-item :room-name="currentBookedRoom.name" description="Test" :capacity="5" :current-situation="1" />
+      <room-item :room-name="currentBookedRoom.name" description="Test" :capacity="5" :current-situation="1" :qr-code="currentBookedRoom.qrCode"/>
     </div>
     <headline headline="Raumliste"/>
     <div class="roomList">
@@ -30,7 +30,7 @@ export default {
   components: { RoomItem, roomList, headline, QrScannerIcon },
   data () {
     return {
-      currentBookedRoom: RoomItem
+      currentBookedRoom: []
     }
   },
   created () {
