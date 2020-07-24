@@ -1,7 +1,6 @@
 <template>
   <div>
     <p class="error">{{ error }}</p>
-    <p class="decode-resulty"><b>{{ result }}</b></p>
     <qrcode-stream @decode="onDecode" @init="onInit" />
   </div>
 </template>
@@ -14,12 +13,12 @@ export default {
   components: { QrcodeStream },
   data () {
     return {
-      result: '',
       error: ''
     }
   },
   methods: {
     onDecode (result) {
+      this.$router.push({ path: `/room/${result}` })
       this.result = result
       // eslint-disable-next-line no-unused-vars
       const roomByQrCodeScanner = roomService.getRoomByQrCodeScanner(result)

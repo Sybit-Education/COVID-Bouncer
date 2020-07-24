@@ -14,11 +14,9 @@
       </q-card>
     </q-dialog>
 <div>
- <q-layout view="lhh LpR lff">
           <q-page-sticky position="bottom-right" :offset="[18, 18]">
             <q-btn fab icon="camera" color="primary" @click="icon = true"/>
           </q-page-sticky>
-    </q-layout>
 </div>
 </div>
 </template>

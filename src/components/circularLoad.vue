@@ -3,7 +3,6 @@
       show-value
       :value="value"
       size="40px"
-      color= $secondary
     >{{ loadFactor }}</q-circular-progress>
 </template>
 

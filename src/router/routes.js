@@ -11,6 +11,11 @@ const routes = [
         component: () => import('pages/Index.vue')
       },
       {
+        name: 'room',
+        path: '/room/:qrCode',
+        component: () => import('pages/RoomDetailPage')
+      },
+      {
         name: 'signin',
         path: '/signin',
         component: () => import('pages/SignIn'),

@@ -1,7 +1,7 @@
 <template>
   <div class=main-container>
     <div>
-      <h3>COVID Bouncer</h3>
+      <h3 class="custom-h3">COVID Bouncer</h3>
     </div>
     <headline headline="Raumliste" />
     <div class="roomList">
@@ -26,5 +26,8 @@ export default {
 
 <style lang="sass" scoped>
 .main-container
-  padding: 0px 8px
+  padding: 0 8px
+
+.custom-h3
+  margin: 0
 </style>

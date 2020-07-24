@@ -1,5 +1,5 @@
 <template>
-  <div class="row roomItem--background">
+  <div class="row roomItem--background" @click="$router.replace(route)">
     <div class="col room">
       {{ roomName }}
     </div>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import CircularLoad from './CircularLoad.vue'
+import CircularLoad from './CircularLoad'
 
 export default {
   components: { CircularLoad },
@@ -29,6 +29,10 @@ export default {
     capacity: {
     },
     currentSituation: {
+    },
+    qrCode: {
+      type: String,
+      required: true
     }
   },
   computed: {
@@ -37,6 +41,9 @@ export default {
     },
     value () {
       return (100 / this.capacity) * this.currentSituation
+    },
+    route () {
+      return '/room/' + this.qrCode
     }
   }
 }
@@ -46,7 +53,7 @@ export default {
 .roomItem--background
   background-color: $primary
   color: $secondary
-  padding: 8px
+  padding: 8px 16px
   font-size: 16px
   border-radius: 8px
   margin-top: 8px
@@ -57,4 +64,7 @@ export default {
 
 .loadFactor
   text-align: end
+
+.description
+  padding-left: 8px
 </style>

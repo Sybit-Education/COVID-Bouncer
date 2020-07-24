@@ -10,7 +10,7 @@ export default {
   props: {
     headline: {
       type: String,
-      required: true,
+      required: false,
       default: 'Raumliste'
     }
   }
@@ -22,5 +22,5 @@ export default {
   color: $primary
   margin: 16px 0px
   font-weight: bold
-  font-size: 16px
+  font-size: 24px
 </style>

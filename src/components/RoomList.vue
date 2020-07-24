@@ -3,8 +3,10 @@
     <div v-for="room in roomList" :key="room.id">
       <room-list-item
         :roomName="room.name"
-        description="Test" :capacity="room.maxPerson"
-        :currentSituation="1" />
+        description="Test"
+        :capacity="room.maxPerson"
+        :currentSituation="1"
+        :qrCode="room.qrCode" />
     </div>
   </div>
 </template>
