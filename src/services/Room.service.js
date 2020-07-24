@@ -1,5 +1,6 @@
 import { $db } from '../services/firebase'
 import { userService } from './User.service'
+import { checkInService } from './CheckIn.service'
 
 const COLLECTION_NAME = 'Room'
 class RoomService {
@@ -29,18 +30,25 @@ class RoomService {
     return this.list
   }
 
-  async getRoomByQrCodeScanner (qrCode) {
+  async getRoomByQrCode (qrCode) {
     const roomList = await this.getRoomList()
     const filteredList = roomList.filter(room => room.qrCode === qrCode)[0]
     return typeof filteredList === 'undefined' ? { error: 'No Room with the QR-Code found' } : filteredList
   }
 
-  // persist user on room for checkin
-  checkin (qrCode) {
-    const user = userService.currentUser()
-    console.log('check in room: ' + qrCode + ' for user ' + user)
+  getUsersOfRoom (qrCode) {
+    const room = this.getRoomByQrCode(qrCode)
+    console.log(room)
+    return [{ initials: 'ssr', firstName: 'Stephan', lastName: 'Strittmatter' }]
+  }
 
-    // TODO persist user on room for checkin
+  // persist user on room for checkin
+  checkIn (qrCode) {
+    userService.currentUser().then(user => {
+      this.getRoomByQrCode(qrCode).then(room => {
+        checkInService.checkIn(user, room)
+      })
+    })
   }
 
   // persist user on room for reservation
@@ -49,6 +57,13 @@ class RoomService {
     console.log('reserve room: ' + qrCode + ' for user ' + user)
 
     // TODO persist user on room for reservation
+  }
+
+  removeMe (qrCode) {
+    const user = userService.currentUser()
+    console.log('remove user ' + user + ' from room qrCode: ' + qrCode)
+
+    // TODO persist
   }
 }
 
