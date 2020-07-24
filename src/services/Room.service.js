@@ -2,6 +2,8 @@ import { $db } from '../services/firebase'
 import { userService } from './User.service'
 
 const COLLECTION_NAME = 'Room'
+// const COLLECTION_NAME_BOOKING = 'Room'
+
 class RoomService {
   list = []
 
@@ -49,6 +51,55 @@ class RoomService {
     console.log('reserve room: ' + qrCode + ' for user ' + user)
 
     // TODO persist user on room for reservation
+  }
+
+  // async getBookings () {
+  //   const list = []
+  //   await $db()
+  //     .collection(COLLECTION_NAME_BOOKING)
+  //     .get()
+  //     .then((querySnapshot) => {
+  //       querySnapshot.forEach((doc) => {
+  //         list.push({
+  //           id: doc.id,
+  //           userId: doc.data().userId,
+  //           roomId: doc.data().roomId,
+  //           bookingDate: doc.data().bookingDate
+  //         })
+  //       })
+  //     })
+  //     .catch((error) => {
+  //       console.log('Error getting room list: ' + error)
+  //     })
+  //   return list
+  // }
+
+  async getBookings () {
+    const list = []
+    list.push({
+      id: '1',
+      userId: 'TpaP2tncQbQBmz6Tqibc',
+      roomId: 'tc1hghW88dMrnKdA72ty',
+      bookingDate: '24.07.2020'
+    })
+    return list
+  }
+
+  async getCurrentBookedRoomOfUser (currentUser) {
+    // muss entfernt werden, sobald Promise weg ist
+    currentUser = 'TpaP2tncQbQBmz6Tqibc'
+    const bookingList = await this.getBookings()
+    const currentDate = new Date(Date.now())
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
+    const currentDateFormatted = currentDate.toLocaleDateString('de-DE', options)
+    bookingList.forEach(boocking => {
+      if (boocking.userId === currentUser && boocking.bookingDate === currentDateFormatted) {
+        const roomList = this.getRoomList()
+        const bookedRoom = roomList.find(room => room.id === boocking.roomId)
+        console.log(bookedRoom)
+        return bookedRoom
+      }
+    })
   }
 }
 
