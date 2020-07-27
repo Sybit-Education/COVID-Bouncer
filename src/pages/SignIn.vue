@@ -36,7 +36,7 @@
                 label="Your initials *"
                 hint="Initials"
                 lazy-rules
-                :rules="[ val => val && val.length === 3 || 'Please tell me your initials']"
+                :rules="[ val => val && val.length > 0 || 'Please tell me your initials']"
             />
 
             <q-input
