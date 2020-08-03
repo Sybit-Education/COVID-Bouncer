@@ -1,0 +1,8 @@
+version: '3.1'
+services:
+  covid-bouncer:
+    image: covid-bouncer.artifactory.sybit.de/covid-bouncer:develop
+    restart: always
+    ports:
+      - "8083:80"
+    container_name: covid-bouncer
