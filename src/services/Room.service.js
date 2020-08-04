@@ -3,7 +3,7 @@ import { userService } from './User.service'
 import { checkInService } from './CheckIn.service'
 
 const COLLECTION_NAME = 'Room'
-// const COLLECTION_NAME_BOOKING = 'Room'
+const COLLECTION_CHECKIN = 'CheckIn'
 
 class RoomService {
   list = []
@@ -11,24 +11,25 @@ class RoomService {
   async getRoomList () {
     if (this.list && this.list.length > 0) {
       return this.list
-    }
-    await $db()
-      .collection(COLLECTION_NAME)
-      .get()
-      .then((querySnapshot) => {
-        console.log('loading room list')
-        querySnapshot.forEach((doc) => {
-          this.list.push({
-            id: doc.id,
-            name: doc.data().name,
-            maxPerson: doc.data().maxPerson,
-            qrCode: doc.data().qrCode
+    } else {
+      await $db()
+        .collection(COLLECTION_NAME)
+        .get()
+        .then((querySnapshot) => {
+          console.log('loading room list')
+          querySnapshot.forEach((doc) => {
+            this.list.push({
+              id: doc.id,
+              name: doc.data().name,
+              maxPerson: doc.data().maxPerson,
+              qrCode: doc.data().qrCode
+            })
           })
         })
-      })
-      .catch((error) => {
-        console.log('Error getting room list: ' + error)
-      })
+        .catch((error) => {
+          console.log('Error getting room list: ' + error)
+        })
+    }
     return this.list
   }
 
@@ -68,52 +69,36 @@ class RoomService {
     // TODO persist
   }
 
-  // async getBookings () {
-  //   const list = []
-  //   await $db()
-  //     .collection(COLLECTION_NAME_BOOKING)
-  //     .get()
-  //     .then((querySnapshot) => {
-  //       querySnapshot.forEach((doc) => {
-  //         list.push({
-  //           id: doc.id,
-  //           userId: doc.data().userId,
-  //           roomId: doc.data().roomId,
-  //           bookingDate: doc.data().bookingDate
-  //         })
-  //       })
-  //     })
-  //     .catch((error) => {
-  //       console.log('Error getting room list: ' + error)
-  //     })
-  //   return list
-  // }
-
   async getBookings () {
-    const list = []
-    list.push({
-      id: '1',
-      userId: 'TpaP2tncQbQBmz6Tqibc',
-      roomId: 'tc1hghW88dMrnKdA72ty',
-      bookingDate: '24.7.2020'
-    })
-    return list
+    const bookingList = []
+    await $db()
+      .collection(COLLECTION_CHECKIN)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          bookingList.push({
+            id: doc.id,
+            userId: doc.data().user,
+            roomId: doc.data().room,
+            bookingDate: doc.data().date.toDate().toDateString()
+          })
+        })
+      })
+      .catch((error) => {
+        console.log('Error getting checkIn list: ' + error)
+      })
+    return bookingList
   }
 
   async getCurrentBookedRoomOfUser (currentUser) {
     // muss entfernt werden, sobald Promise weg ist
     currentUser = 'TpaP2tncQbQBmz6Tqibc'
     const bookingList = await this.getBookings()
-    const currentDate = new Date(Date.now())
-    const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
-    const currentDateFormatted = currentDate.toLocaleDateString('de-DE', options)
-    bookingList.forEach(boocking => {
-      if (boocking.userId === currentUser && boocking.bookingDate === currentDateFormatted) {
-        this.list.forEach(room => {
-          if (room.id === boocking.roomId) {
-            return room
-          }
-        })
+    const currentDate = new Date(Date.now()).toDateString()
+    bookingList.forEach(booking => {
+      if (booking.userId === currentUser && booking.bookingDate === currentDate) {
+        const room = this.list.find(room => room.id === booking.roomId)
+        return room
       }
     })
   }
