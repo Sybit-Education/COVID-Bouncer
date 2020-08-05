@@ -9,61 +9,57 @@ class UserService {
     this.user = null
   }
 
-  signIn ({ firstName, lastName, initials, masterPassword }) {
-    return configService
+  async signIn ({ firstName, lastName, initials, masterPassword }) {
+    const loadedPassword = await configService
       .fetchMasterPassword()
-      .then(loadedPassword => {
-        if (loadedPassword !== masterPassword) {
-          return Promise.reject('The entered password does not match with the master password')
-        } else {
-          this.fetchUserByInitials(initials)
-            .then(user => {
-              if (user) {
-                return user
-              } else {
-                const user = {
-                  firstName,
-                  lastName,
-                  initials
-                }
-                return $db().collection(COLLECTION_NAME).add(user).then(response => {
-                  user.id = response.id
-                  return user
-                })
-              }
+    if (loadedPassword !== masterPassword) {
+      return Promise.reject('The entered password does not match with the master password')
+    } else {
+      await this.fetchUserByInitials(initials)
+        .then(user => {
+          if (user) {
+            return user
+          } else {
+            const user1 = {
+              firstName,
+              lastName,
+              initials
+            }
+            return $db().collection(COLLECTION_NAME).add(user1).then(response => {
+              user1.id = response.id
+              return user1
             })
-            .then(user => {
-              this.user = user
-              LocalStorage.set('userId', user.id)
-            })
-        }
-      })
+          }
+        })
+        .then(user2 => {
+          this.user = user2
+          LocalStorage.set('userId', user2.id)
+        })
+    }
   }
 
-  fetchUserByInitials (initials) {
-    return $db().collection(COLLECTION_NAME).where('initials', '==', initials).get().then(response => {
-      let user = null
-      response.forEach(userDoc => {
-        user = {
-          id: userDoc.id,
-          firstName: userDoc.data().firstName,
-          lastName: userDoc.data().lastName,
-          initials: userDoc.data().initials
-        }
-      })
-      return user
-    })
-  }
-
-  fetchUserById (userId) {
-    return $db().collection(COLLECTION_NAME).doc(userId).get().then(userDoc => {
-      return {
+  async fetchUserByInitials (initials) {
+    const response = await $db().collection(COLLECTION_NAME).where('initials', '==', initials).get()
+    let user = null
+    response.forEach(userDoc => {
+      user = {
         id: userDoc.id,
         firstName: userDoc.data().firstName,
         lastName: userDoc.data().lastName,
         initials: userDoc.data().initials
       }
     })
+    return user
+  }
+
+  async fetchUserById (userId) {
+    const userDoc = await $db().collection(COLLECTION_NAME).doc(userId).get()
+    return {
+      id: userDoc.id,
+      firstName: userDoc.data().firstName,
+      lastName: userDoc.data().lastName,
+      initials: userDoc.data().initials
+    }
   }
 
   currentUser () {

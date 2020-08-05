@@ -117,3 +117,5 @@ dist
 
 .env
 .env.production
+
+.vscode/

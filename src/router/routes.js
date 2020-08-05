@@ -8,11 +8,13 @@ const routes = [
       {
         name: 'home',
         path: '',
+        beforeEnter: guard,
         component: () => import('pages/Index.vue')
       },
       {
         name: 'room',
         path: '/room/:qrCode',
+        beforeEnter: guard,
         component: () => import('pages/RoomDetailPage')
       },
       {
@@ -37,5 +39,13 @@ const routes = [
     component: () => import('pages/Error404.vue')
   }
 ]
+
+function guard (to, from, next) {
+  if (userService.isLoggedIn()) {
+    next()
+  } else {
+    next({ name: 'signin' })
+  }
+}
 
 export default routes

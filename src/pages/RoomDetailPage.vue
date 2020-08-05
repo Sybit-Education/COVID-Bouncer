@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header">
-      <h5>{{room.name}}</h5>
+      <router-link class="routerLink" to="/"><h5>{{room.name}}</h5></router-link>
     </div>
     <div class="main-container">
       <circular-load :value="value" :loadFactor="loadFactor"></circular-load>
@@ -86,4 +86,8 @@ export default {
 
     button
       min-width: 40%
+
+  .routerLink
+    text-decoration: none
+    color: white
 </style>
