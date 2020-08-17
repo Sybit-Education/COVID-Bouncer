@@ -8,6 +8,9 @@
     <headline headline="Raumliste"/>
     <roomList />
 
+    <q-footer>
+      <p>Benutzer: <current-user-item /></p>
+    </q-footer>
     <qr-scanner-icon/>
   </div>
 </template>
@@ -17,10 +20,11 @@ import roomList from 'components/RoomList'
 import CurrentBookedRoom from 'components/CurrentBookedRoom'
 import headline from 'components/headline'
 import QrScannerIcon from 'components/QrScannerIcon'
+import CurrentUserItem from 'components/CurrentUserItem'
 
 export default {
   name: 'PageIndex',
-  components: { roomList, CurrentBookedRoom, headline, QrScannerIcon }
+  components: { roomList, CurrentBookedRoom, headline, QrScannerIcon, CurrentUserItem }
 }
 </script>
 
