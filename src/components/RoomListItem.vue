@@ -1,5 +1,5 @@
 <template>
-  <div class="row roomItem--background" @click="$router.replace(route)">
+  <div :id="id" class="row roomItem--background" @click="$router.replace(route)">
     <div class="col room">
       {{ name }}
     </div>
@@ -19,6 +19,10 @@ export default {
   components: { CircularLoadIndicator },
   name: 'RoomListItem',
   props: {
+    id: {
+      type: String,
+      required: true
+    },
     name: {
       type: String,
       required: true

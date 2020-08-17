@@ -20,6 +20,7 @@ class RoomService {
           this.list.push({
             id: doc.id,
             name: doc.data().name,
+            description: doc.data().description,
             maxPerson: doc.data().maxPerson,
             qrCode: doc.data().qrCode
           })

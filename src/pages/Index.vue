@@ -1,41 +1,26 @@
 <template>
   <div class=main-container>
-    <div>
-      <h3 class="custom-h3">COVID Bouncer</h3>
-    </div>
+    <h3 class="custom-h3">COVID Bouncer</h3>
+
     <headline headline="Für heute gebuchter Raum"/>
-    <div>
-      <room-list-item :room-name="currentBookedRoom.name" description="Test" :capacity="5" :current-situation="1" :qr-code="currentBookedRoom.qrCode"/>
-    </div>
+    <current-booked-room />
+
     <headline headline="Raumliste"/>
-    <div class="roomList">
-      <roomList></roomList>
-    </div>
-    <div>
-      <QrScannerIcon></QrScannerIcon>
-    </div>
+    <roomList />
+
+    <qr-scanner-icon/>
   </div>
 </template>
 
 <script>
 import roomList from 'components/RoomList'
-import RoomListItem from 'components/RoomListItem'
+import CurrentBookedRoom from 'components/CurrentBookedRoom'
 import headline from 'components/headline'
 import QrScannerIcon from 'components/QrScannerIcon'
-import { roomService } from 'src/services/Room.service'
-import { userService } from 'src/services/User.service'
 
 export default {
   name: 'PageIndex',
-  components: { roomList, RoomListItem, headline, QrScannerIcon },
-  data () {
-    return {
-      currentBookedRoom: []
-    }
-  },
-  created () {
-    roomService.getCurrentBookedRoomOfUser(userService.currentUser()).then(data => { this.currentBookedRoom = data })
-  }
+  components: { roomList, CurrentBookedRoom, headline, QrScannerIcon }
 }
 </script>
 

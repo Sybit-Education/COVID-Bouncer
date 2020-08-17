@@ -2,8 +2,9 @@
   <div v-if="roomList">
     <div v-for="room in roomList" :key="room.id">
       <room-list-item
-        :roomName="room.name"
-        description="Test"
+        :id="room.id"
+        :name="room.name"
+        :description="room.description"
         :capacity="room.maxPerson"
         :currentSituation="1"
         :qrCode="room.qrCode" />
