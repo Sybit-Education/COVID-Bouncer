@@ -17,6 +17,49 @@ class CheckInService {
     })
   }
 
+  /**
+   * Get the room of the user, where he is checked in today.
+   */
+  async getTodaysCheckin (user) {
+    console.log('getTodaysCheckin: user=' + JSON.stringify(user))
+    const docRef = $db().collection(COLLECTION_NAME).doc(user.initials + '_' + this.getDateString(new Date()))
+    let checkin = null
+    await docRef.get().then((doc) => {
+      if (doc.exists) {
+        checkin = {
+          room: doc.data().room,
+          user: doc.data().user,
+          date: doc.data().date
+        }
+      } else {
+        console.log('no checkin found')
+        checkin = null
+      }
+    }).catch((error) => {
+      console.log('Error getting document: ', error)
+      checkin = null
+    })
+    return checkin
+  }
+
+  getTodaysUsersOfRoom (room) {
+    const list = []
+    // const dateString = this.getDateString(new Date())
+    const collection = $db().collection(COLLECTION_NAME)
+    collection.get()
+      .then((querySnapshot) => {
+        console.log('loading reservation list')
+        querySnapshot.forEach((doc) => {
+          list.push({
+            id: doc.id,
+            name: doc.data().name,
+            maxPerson: doc.data().maxPerson,
+            qrCode: doc.data().qrCode
+          })
+        })
+      })
+  }
+
   getDateString (date) {
     const year = date.getFullYear()
     const month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()

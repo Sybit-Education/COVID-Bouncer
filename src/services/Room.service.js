@@ -11,19 +11,17 @@ class RoomService {
   async getRoomList () {
     if (this.list && this.list.length > 0) {
       return this.list
-    } else {
-      await $db()
-        .collection(COLLECTION_NAME)
-        .get()
-        .then((querySnapshot) => {
-          console.log('loading room list')
-          querySnapshot.forEach((doc) => {
-            this.list.push({
-              id: doc.id,
-              name: doc.data().name,
-              maxPerson: doc.data().maxPerson,
-              qrCode: doc.data().qrCode
-            })
+    }
+    await $db()
+      .collection(COLLECTION_NAME)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          this.list.push({
+            id: doc.id,
+            name: doc.data().name,
+            maxPerson: doc.data().maxPerson,
+            qrCode: doc.data().qrCode
           })
         })
         .catch((error) => {
@@ -33,10 +31,16 @@ class RoomService {
     return this.list
   }
 
+  async getRoomById (id) {
+    const roomList = await this.getRoomList()
+    const filteredList = roomList.filter(room => room.id === id)[0]
+    return typeof filteredList === 'undefined' ? { error: 'No Room with the id ' + id + ' found' } : filteredList
+  }
+
   async getRoomByQrCode (qrCode) {
     const roomList = await this.getRoomList()
     const filteredList = roomList.filter(room => room.qrCode === qrCode)[0]
-    return typeof filteredList === 'undefined' ? { error: 'No Room with the QR-Code found' } : filteredList
+    return typeof filteredList === 'undefined' ? { error: 'No Room with the QR-Code ' + qrCode + 'found' } : filteredList
   }
 
   getUsersOfRoom (qrCode) {
@@ -90,17 +94,20 @@ class RoomService {
     return bookingList
   }
 
-  async getCurrentBookedRoomOfUser (currentUser) {
-    // muss entfernt werden, sobald Promise weg ist
-    currentUser = 'TpaP2tncQbQBmz6Tqibc'
-    const bookingList = await this.getBookings()
-    const currentDate = new Date(Date.now()).toDateString()
-    bookingList.forEach(booking => {
-      if (booking.userId === currentUser && booking.bookingDate === currentDate) {
-        const room = this.list.find(room => room.id === booking.roomId)
-        return room
-      }
-    })
+  async getCurrentBookedRoomOfUser () {
+    const currentUser = await userService.currentUser()
+    checkInService.getTodaysCheckin(currentUser)
+      .then(async (checkin) => {
+        let bookedRoom = null
+        if (checkin != null) {
+          bookedRoom = await this.getRoomById(checkin.room)
+        } else {
+          console.log('no checkin room')
+          bookedRoom = null
+        }
+        console.log(bookedRoom)
+        return bookedRoom
+      })
   }
 }
 

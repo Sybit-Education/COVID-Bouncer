@@ -17,7 +17,7 @@ import CircularLoad from './CircularLoad'
 
 export default {
   components: { CircularLoad },
-  name: 'RoomItem',
+  name: 'RoomListItem',
   props: {
     roomName: {
       type: String,
