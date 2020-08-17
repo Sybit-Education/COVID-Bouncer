@@ -23,11 +23,10 @@ class RoomService {
             maxPerson: doc.data().maxPerson,
             qrCode: doc.data().qrCode
           })
-        })
-        .catch((error) => {
+        }).catch((error) => {
           console.log('Error getting room list: ' + error)
         })
-    }
+      })
     return this.list
   }
 

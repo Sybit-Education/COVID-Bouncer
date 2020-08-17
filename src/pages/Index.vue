@@ -5,7 +5,7 @@
     </div>
     <headline headline="Für heute gebuchter Raum"/>
     <div>
-      <room-item :room-name="currentBookedRoom.name" description="Test" :capacity="5" :current-situation="1" :qr-code="currentBookedRoom.qrCode"/>
+      <room-list-item :room-name="currentBookedRoom.name" description="Test" :capacity="5" :current-situation="1" :qr-code="currentBookedRoom.qrCode"/>
     </div>
     <headline headline="Raumliste"/>
     <div class="roomList">
@@ -19,15 +19,15 @@
 
 <script>
 import roomList from 'components/roomList'
+import RoomListItem from 'components/roomListItem'
 import headline from 'components/headline'
 import QrScannerIcon from 'components/QrScannerIcon'
-import RoomItem from '../components/RoomListItem'
 import { roomService } from 'src/services/Room.service'
 import { userService } from 'src/services/User.service'
 
 export default {
   name: 'PageIndex',
-  components: { RoomItem, roomList, headline, QrScannerIcon },
+  components: { roomList, RoomListItem, headline, QrScannerIcon },
   data () {
     return {
       currentBookedRoom: []
