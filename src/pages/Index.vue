@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import roomList from 'components/roomList'
-import RoomListItem from 'components/roomListItem'
+import roomList from 'components/RoomList'
+import RoomListItem from 'components/RoomListItem'
 import headline from 'components/headline'
 import QrScannerIcon from 'components/QrScannerIcon'
 import { roomService } from 'src/services/Room.service'
