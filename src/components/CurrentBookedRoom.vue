@@ -5,7 +5,7 @@
         :description="currentBookedRoom.description"
         :capacity="5" :current-situation="1"
         :qr-code="currentBookedRoom.qrCode"/>
-      <span v-if="!currentBookedRoom">Kein Raum gebucht</span>
+      <span v-if="!currentBookedRoom">Aktuell kein Raum gebucht</span>
     </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
   components: { RoomListItem },
   data () {
     return {
-      currentBookedRoom: []
+      currentBookedRoom: null
     }
   },
   created () {
