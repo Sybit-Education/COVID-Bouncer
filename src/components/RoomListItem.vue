@@ -64,6 +64,7 @@ export default {
   border-radius: 8px
   margin-top: 8px
   line-height: 40px
+  cursor: pointer
 
 .room
   font-weight: bold
