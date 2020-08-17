@@ -4,7 +4,7 @@
       <router-link class="routerLink" to="/"><h5>{{room.name}}</h5></router-link>
     </div>
     <div class="main-container">
-      <circular-load :value="value" :loadFactor="loadFactor"></circular-load>
+      <circular-load-indicator :value="value" :loadFactor="loadFactor"></circular-load-indicator>
       <div class="submitButton">
         <q-btn color="primary" @click="checkIn">Check in</q-btn>
         <q-btn color="primary" @click="removeMe">Remove me</q-btn>
@@ -21,10 +21,10 @@
 
 <script>
 import { roomService } from '../services/Room.service'
-import CircularLoad from '../components/CircularLoad'
+import CircularLoadIndicator from '../components/CircularLoadIndicator'
 export default {
   name: 'RoomDetailPage',
-  components: { CircularLoad },
+  components: { CircularLoadIndicator },
   data () {
     return {
       room: {}

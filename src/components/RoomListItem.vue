@@ -1,25 +1,25 @@
 <template>
   <div class="row roomItem--background" @click="$router.replace(route)">
     <div class="col room">
-      {{ roomName }}
+      {{ name }}
     </div>
     <div class="col-6 description">
       {{ description }}
     </div>
     <div class="col-2 loadFactor">
-      <circular-Load :value="value" :loadFactor="loadFactor" />
+      <circular-Load-indicator :value="value" :loadFactor="loadFactor" />
     </div>
   </div>
 </template>
 
 <script>
-import CircularLoad from './CircularLoad'
+import CircularLoadIndicator from 'components/CircularLoadIndicator.vue'
 
 export default {
-  components: { CircularLoad },
+  components: { CircularLoadIndicator },
   name: 'RoomListItem',
   props: {
-    roomName: {
+    name: {
       type: String,
       required: true
     },
@@ -27,8 +27,10 @@ export default {
       type: String
     },
     capacity: {
+      type: Number
     },
     currentSituation: {
+      type: Number
     },
     qrCode: {
       type: String,
