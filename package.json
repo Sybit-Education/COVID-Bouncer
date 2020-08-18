@@ -14,11 +14,11 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.0.0",
+    "@quasar/extras": "^1.9.4",
     "core-js": "^3.6.5",
-    "firebase": "^7.16.1",
+    "firebase": "^7.18.0",
     "quasar": "^1.0.0",
-    "vue-qrcode-reader": "^2.3.10"
+    "vue-qrcode-reader": "^2.3.12"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",
