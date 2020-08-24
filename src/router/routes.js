@@ -18,6 +18,12 @@ const routes = [
         component: () => import('pages/RoomDetailPage')
       },
       {
+        name: 'room',
+        path: '/room/:qrCode/print',
+        beforeEnter: guard,
+        component: () => import('pages/RoomDetailPrint')
+      },
+      {
         name: 'signin',
         path: '/signin',
         component: () => import('pages/SignIn'),

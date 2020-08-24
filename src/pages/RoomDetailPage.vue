@@ -1,21 +1,30 @@
 <template>
   <div>
     <div class="header">
-      <router-link class="routerLink" to="/"><h5>{{room.name}}</h5></router-link>
+      <router-link class="routerLink" to="/">
+        <h5><q-icon name="arrow_back" /> {{room.name}}</h5>
+      </router-link>
+      <circular-load :value="value" :loadFactor="loadFactor"></circular-load>
     </div>
     <div class="main-container">
-      <circular-load :value="value" :loadFactor="loadFactor"></circular-load>
-      <div class="submitButton">
-        <q-btn color="primary" @click="checkIn">Check in</q-btn>
-        <q-btn color="primary" @click="removeMe">Remove me</q-btn>
-      </div>
+
       <h4>Aktuell eingechecked:</h4>
       <ul class="userList">
          <li v-for="user in userList" :key="user.id">
            <div>{{ user.firstName }} {{ user.lastName }} ({{ user.initials }})</div>
         </li>
       </ul>
+      <div>
+        <q-btn outline class="btn" :to="'/room/' + room.qrCode + '/print'">Room-Label ...</q-btn>
+      </div>
     </div>
+    <q-footer elevated>
+      <div class="button-bar">
+        <q-btn flat @click="checkIn" icon="check">Check in</q-btn>
+        <q-btn flat @click="removeMe" icon="delete">Remove me</q-btn>
+      </div>
+
+    </q-footer>
   </div>
 </template>
 
@@ -74,15 +83,11 @@ export default {
     padding: 0px 16px
     color: white
 
-  .main-container
-    padding: 0px 8px
-    margin-top: 32px
-
-  .submitButton
+  .button-bar
     justify-content: space-around
     display: flex
     flex-direction: row
-    margin-top: 64px
+    margin-bottom: 0.25rem
 
     button
       min-width: 40%
