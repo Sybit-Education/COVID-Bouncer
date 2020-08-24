@@ -1,7 +1,7 @@
 <template>
   <div class=main-container>
     <div>
-      <h3 class="custom-h3">COVID Bouncer</h3>
+      <h1 class="custom-h3">COVID Bouncer</h1>
     </div>
     <headline headline="Raumliste" />
     <div class="roomList">
