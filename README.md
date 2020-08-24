@@ -89,6 +89,20 @@ VUE_APP_FIREBASE_MEASUREMENT_ID="xxxx"
 
 You will get the values if you create a web application for Google Firestore.
 
+### Configuration of Covid-Statistics
+
+You have to add `.env` file in the root directory having following environment variable
+to show statistics of your (German) Landkreis:
+
+```javascript
+VUE_APP_COVID_STATISTIC_OBJECT_ID_LIST="211,119,27,98,200"
+```
+
+It is a comma separated list of the object-ids to show data of these areas.
+
+The `OBJECTID`s could be found on map at:
+[https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/917fc37a709542548cc3be077a786c17_0?geometry=-24.127%2C46.244%2C44.911%2C55.866]
+
 ## License
 
 [MIT License](LICENSE)
