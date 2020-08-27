@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <div class="print-label">
-      <div class="header">
+      <div class="header text-center">
         <h1>{{room.name}}</h1>
       </div>
       <div class="text-center">
@@ -11,11 +11,14 @@
       </div>
       <h5 class="text-right">COVID Bouncer</h5>
     </div>
-    <q-footer bordered class="bg-white text-primary q-pa-sm q-gutter-sm print-hide">
-      <q-btn round outline icon="print" @click="print">
+    <div class="q-ma-lm print-hide">
+      Print this label and attach next to the door to check in via QR-Code.
+    </div>
+    <q-footer elevated class="print-hide">
+      <q-btn flat icon="print" @click="print" label="Print">
         <q-tooltip>Print this label</q-tooltip>
       </q-btn>
-      <q-btn round outline icon="close" @click="close">
+      <q-btn flat class="justify-right" icon="close" label="Close" @click="close">
         <q-tooltip>Close</q-tooltip>
       </q-btn>
     </q-footer>

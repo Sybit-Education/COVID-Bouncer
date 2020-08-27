@@ -15,13 +15,14 @@
         </li>
       </ul>
       <div>
-        <q-btn outline class="btn" :to="'/room/' + room.qrCode + '/print'">Room-Label ...</q-btn>
+        <q-btn @click="print" icon="print" color="primary" label="Room-Label ..." />
       </div>
     </div>
     <q-footer elevated>
-      <div class="button-bar">
-        <q-btn flat @click="checkIn" icon="check">Check in</q-btn>
-        <q-btn flat @click="removeMe" icon="delete">Remove me</q-btn>
+      <div>
+        <q-btn flat to="/" icon="home" />
+        <q-btn flat @click="checkIn" icon="check" label="Check in" />
+        <q-btn flat @click="removeMe" icon="delete" label="Remove me" />
       </div>
 
     </q-footer>
@@ -63,6 +64,10 @@ export default {
     removeMe () {
       roomService.removeMe(this.room.qrCode)
     },
+    print () {
+      console.log('print...')
+      this.$router.push('/room/' + this.room.qrCode + '/print')
+    },
     usersOfRoom () {
       return roomService.getUsersOfRoom(this.room.qrCode)
     }
@@ -82,15 +87,6 @@ export default {
     box-shadow: 0px 2px 4px #999
     padding: 0px 16px
     color: white
-
-  .button-bar
-    justify-content: space-around
-    display: flex
-    flex-direction: row
-    margin-bottom: 0.25rem
-
-    button
-      min-width: 40%
 
   .routerLink
     text-decoration: none
