@@ -1,7 +1,7 @@
 <template>
-  <div class="headline">
+  <h3 class="headline">
     {{ headline }}
-  </div>
+  </h3>
 </template>
 
 <script>
@@ -20,7 +20,5 @@ export default {
 <style lang="sass" scoped>
 .headline
   color: $primary
-  margin: 16px 0px
   font-weight: bold
-  font-size: 24px
 </style>

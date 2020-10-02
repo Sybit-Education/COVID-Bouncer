@@ -14,7 +14,7 @@ class RoomService {
       .collection(COLLECTION_NAME)
       .get()
       .then((querySnapshot) => {
-        console.log('loading room list')
+        this.list = []
         querySnapshot.forEach((doc) => {
           this.list.push({
             id: doc.id,
@@ -38,7 +38,6 @@ class RoomService {
 
   getUsersOfRoom (qrCode) {
     const room = this.getRoomByQrCode(qrCode)
-    console.log(room)
     return [{ initials: 'ssr', firstName: 'Stephan', lastName: 'Strittmatter' }]
   }
 
