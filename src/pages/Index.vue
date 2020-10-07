@@ -10,8 +10,6 @@
     <div>
       <headline headline="Aktuelle Corona-Zahlen" />
       <covid-statistic :objectIds="this.covidIds"/>
-
-      <QrScannerIcon></QrScannerIcon>
     </div>
   </div>
 </template>
@@ -19,12 +17,11 @@
 <script>
 import roomList from 'components/roomList'
 import headline from 'components/headline'
-import QrScannerIcon from 'components/QrScannerIcon'
 import CovidStatistic from 'components/CovidStatistic'
 
 export default {
   name: 'PageIndex',
-  components: { roomList, headline, QrScannerIcon, CovidStatistic },
+  components: { roomList, headline, CovidStatistic },
   data () {
     return {
       covidIds: process.env.VUE_APP_COVID_STATISTIC_OBJECT_ID_LIST
