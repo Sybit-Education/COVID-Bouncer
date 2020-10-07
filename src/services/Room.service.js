@@ -37,6 +37,7 @@ class RoomService {
   }
 
   getUsersOfRoom (qrCode) {
+    // eslint-disable-next-line no-unused-vars
     const room = this.getRoomByQrCode(qrCode)
     return [{ initials: 'ssr', firstName: 'Stephan', lastName: 'Strittmatter' }]
   }
