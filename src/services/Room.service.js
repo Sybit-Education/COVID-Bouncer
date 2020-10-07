@@ -44,10 +44,27 @@ class RoomService {
     return typeof filteredList === 'undefined' ? { error: 'No Room with the QR-Code ' + qrCode + 'found' } : filteredList
   }
 
-  getUsersOfRoom (qrCode) {
-    const room = this.getRoomByQrCode(qrCode)
-    console.log(room)
-    return [{ initials: 'ssr', firstName: 'Stephan', lastName: 'Strittmatter' }]
+  async getUsersOfRoom (qrCode) {
+    const room = await this.getRoomByQrCode(qrCode)
+    console.log('RoomID', room.id)
+    const userOfRoom = []
+    $db()
+      .collection(COLLECTION_NAME)
+      .doc(room.id)
+      .collection('checkedin')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(user => {
+          userOfRoom.push({
+            initials: user.data().user,
+            firstName: user.data().date,
+            lastName: user.data().user
+          })
+        })
+      }).catch((error) => {
+        console.log('Error getting UsersOfRoom: ' + error)
+      })
+    return userOfRoom
   }
 
   // persist user on room for checkin

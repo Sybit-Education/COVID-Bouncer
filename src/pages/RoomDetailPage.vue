@@ -27,12 +27,16 @@ export default {
   components: { CircularLoadIndicator },
   data () {
     return {
-      room: {}
+      room: {},
+      userList: {}
     }
   },
   created () {
     roomService.getRoomByQrCode(this.$route.params.qrCode).then(data => {
       data.error ? this.$router.push('/404') : this.room = data
+    })
+    roomService.getUsersOfRoom(this.$route.params.qrCode).then(data => {
+      this.userList = data
     })
   },
   computed: {
@@ -41,9 +45,6 @@ export default {
     },
     value () {
       return (100 / this.room.maxPerson) * 1
-    },
-    userList () {
-      return this.usersOfRoom()
     }
   },
   methods: {
@@ -53,9 +54,6 @@ export default {
     },
     removeMe () {
       roomService.removeMe(this.room.qrCode)
-    },
-    usersOfRoom () {
-      return roomService.getUsersOfRoom(this.room.qrCode)
     }
   }
 }
