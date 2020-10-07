@@ -44,6 +44,7 @@ class RoomService {
     return typeof filteredList === 'undefined' ? { error: 'No Room with the QR-Code ' + qrCode + 'found' } : filteredList
   }
 
+  // TODO: getUsersOfRoom from checkinservice
   async getUsersOfRoom (qrCode) {
     const room = await this.getRoomByQrCode(qrCode)
     console.log('RoomID', room.id)
@@ -112,20 +113,16 @@ class RoomService {
     return bookingList
   }
 
-  async getCurrentBookedRoomOfUser () {
-    const currentUser = await userService.currentUser()
-    checkInService.getTodaysCheckin(currentUser)
-      .then(async (checkin) => {
-        let bookedRoom = null
-        if (checkin != null) {
-          bookedRoom = await this.getRoomById(checkin.room)
-        } else {
-          console.log('no checkin room')
-          bookedRoom = null
-        }
-        console.log(bookedRoom)
-        return bookedRoom
-      })
+  async getCurrentBookedRoomOfUser (currentUser) {
+    let bookedRoom = null
+    const checkin = await checkInService.getTodaysCheckin(currentUser)
+    if (checkin != null) {
+      bookedRoom = await this.getRoomById(checkin.room)
+    } else {
+      console.log('no checkin room')
+      bookedRoom = null
+    }
+    return bookedRoom
   }
 }
 

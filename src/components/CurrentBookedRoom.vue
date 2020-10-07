@@ -1,7 +1,8 @@
 <template>
   <div>
       <room-list-item v-if="currentBookedRoom"
-        :room-name="currentBookedRoom.name"
+        :id="currentBookedRoom.id"
+        :name="currentBookedRoom.name"
         :description="currentBookedRoom.description"
         :capacity="5" :current-situation="1"
         :qr-code="currentBookedRoom.qrCode"/>
@@ -19,17 +20,15 @@ export default {
   components: { RoomListItem },
   data () {
     return {
-      currentBookedRoom: null
+      currentBookedRoom: {}
     }
   },
-  created () {
-    roomService.getCurrentBookedRoomOfUser(userService.currentUser())
-      .then(data => {
-        this.currentBookedRoom = data
-      })
+  async created () {
+    const currentUser = await userService.currentUser()
+    this.currentBookedRoom = await roomService.getCurrentBookedRoomOfUser(currentUser)
   }
-
 }
+
 </script>
 
 <style>
