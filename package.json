@@ -16,12 +16,16 @@
   "dependencies": {
     "@quasar/extras": "^1.9.4",
     "core-js": "^3.6.5",
-    "firebase": "^7.18.0",
-    "quasar": "^1.0.0",
-    "vue-qrcode-reader": "^2.3.12"
+    "vue-qrcode-reader": "^2.3.12",
+    "@chenfengyuan/vue-qrcode": "^1.0.2",
+    "axios": "^0.19.2",
+    "firebase": "^7.19.0",
+    "quasar": "^1.13.1",
+    "vue": "^2.6.12",
+    "vue2-filters": "^0.11.0"
   },
   "devDependencies": {
-    "@quasar/app": "^2.0.0",
+    "@quasar/app": "^2.0.8",
     "@quasar/quasar-app-extension-dotenv": "^1.0.5",
     "babel-eslint": "^10.0.1",
     "dotenv": "^8.2.0",

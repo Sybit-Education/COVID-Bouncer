@@ -1,10 +1,12 @@
 <template>
   <div>
     <div class="header">
-      <router-link class="routerLink" to="/"><h5>{{room.name}}</h5></router-link>
-    </div>
-    <div class="main-container">
+      <router-link class="routerLink" to="/">
+        <h5><q-icon name="arrow_back" /> {{room.name}}</h5>
+      </router-link>
       <circular-load-indicator :value="value" :loadFactor="loadFactor"></circular-load-indicator>
+    </div>
+    <div class="main-container mt-4">
       <div class="submitButton">
         <q-btn color="primary" @click="checkIn">Check in</q-btn>
         <q-btn color="primary" @click="removeMe">Remove me</q-btn>
@@ -15,7 +17,18 @@
            <div>{{ user.firstName }} {{ user.lastName }} ({{ user.initials }})</div>
         </li>
       </ul>
+      <div>
+        <q-btn @click="print" icon="print" color="primary" label="Room-Label ..." />
+      </div>
     </div>
+    <q-footer elevated>
+      <div>
+        <q-btn flat to="/" icon="home" />
+        <q-btn flat @click="checkIn" icon="check" label="Check in" />
+        <q-btn flat @click="removeMe" icon="delete" label="Remove me" />
+      </div>
+
+    </q-footer>
   </div>
 </template>
 
@@ -54,6 +67,12 @@ export default {
     },
     removeMe () {
       roomService.removeMe(this.room.qrCode)
+    },
+    print () {
+      this.$router.push('/room/' + this.room.qrCode + '/print')
+    },
+    usersOfRoom () {
+      return roomService.getUsersOfRoom(this.room.qrCode)
     }
   }
 }
@@ -72,20 +91,14 @@ export default {
     padding: 0px 16px
     color: white
 
-  .main-container
-    padding: 0px 8px
-    margin-top: 32px
-
-  .submitButton
-    justify-content: space-around
-    display: flex
-    flex-direction: row
-    margin-top: 64px
-
-    button
-      min-width: 40%
-
   .routerLink
     text-decoration: none
     color: white
+
+  .main-container
+    margin-top: 1rem
+
+  .submitButton
+    display: flex
+    justify-content: space-evenly
 </style>

@@ -8,10 +8,13 @@
     <headline headline="Raumliste"/>
     <roomList />
 
+    <div>
+      <headline headline="Aktuelle Corona-Zahlen" />
+      <covid-statistic :objectIds="this.covidIds"/>
+    </div>
     <q-footer>
       <p>Benutzer: <current-user-item /></p>
     </q-footer>
-    <qr-scanner-icon/>
   </div>
 </template>
 
@@ -19,12 +22,18 @@
 import roomList from 'components/RoomList'
 import CurrentBookedRoom from 'components/CurrentBookedRoom'
 import headline from 'components/headline'
-import QrScannerIcon from 'components/QrScannerIcon'
 import CurrentUserItem from 'components/CurrentUserItem'
+import CovidStatistic from 'components/CovidStatistic'
 
 export default {
   name: 'PageIndex',
-  components: { roomList, CurrentBookedRoom, headline, QrScannerIcon, CurrentUserItem }
+  components: { roomList, CurrentBookedRoom, headline, CurrentUserItem, CovidStatistic },
+
+  data () {
+    return {
+      covidIds: process.env.VUE_APP_COVID_STATISTIC_OBJECT_ID_LIST
+    }
+  }
 }
 </script>
 
