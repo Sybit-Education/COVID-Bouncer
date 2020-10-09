@@ -14,14 +14,14 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@chenfengyuan/vue-qrcode": "^1.0.2",
-    "@quasar/extras": "^1.0.0",
-    "axios": "^0.19.2",
+    "@quasar/extras": "^1.9.4",
     "core-js": "^3.6.5",
+    "vue-qrcode-reader": "^2.3.12",
+    "@chenfengyuan/vue-qrcode": "^1.0.2",
+    "axios": "^0.19.2",
     "firebase": "^7.19.0",
     "quasar": "^1.13.1",
     "vue": "^2.6.12",
-    "vue-qrcode-reader": "^2.3.10",
     "vue2-filters": "^0.11.0"
   },
   "devDependencies": {
