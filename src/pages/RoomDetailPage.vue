@@ -34,7 +34,7 @@
 
 <script>
 import { roomService } from '../services/Room.service'
-import CircularLoadIndicator from '../components/CircularLoadIndicator'
+import CircularLoadIndicator from './components/CircularLoadIndicator'
 export default {
   name: 'RoomDetailPage',
   components: { CircularLoadIndicator },
