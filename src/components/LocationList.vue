@@ -1,8 +1,7 @@
 <template>
   <div>
     <div :key="location.key" v-for="location in locations">
-      <card></card>
-      <p>{{location}}</p>
+      <card :locationName=location></card>
       </div>
   </div>
 </template>
