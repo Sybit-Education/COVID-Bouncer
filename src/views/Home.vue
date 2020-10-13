@@ -15,3 +15,8 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.home
+  overflow-y: hidden
+</style>
