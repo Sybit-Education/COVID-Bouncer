@@ -6,7 +6,6 @@ import store from './store'
 
 //  Bootstrap & main Variables
 import './assets/app.sass'
-import { BootstrapVue } from 'bootstrap-vue'
 
 //  Firebase
 import firebase from 'firebase'
@@ -29,8 +28,6 @@ library.add(faUserSecret, faChevronLeft)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
-
-Vue.use(BootstrapVue)
 
 new Vue({
   router,
