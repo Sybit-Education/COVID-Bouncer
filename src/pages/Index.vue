@@ -1,13 +1,14 @@
 <template>
   <div class=main-container>
-    <div>
-      <h1 class="custom-h3">COVID Bouncer</h1>
-    </div>
-    <current-booked-room></current-booked-room>
-    <headline headline="Raumliste" />
-    <div class="roomList">
-      <roomList></roomList>
-    </div>
+
+    <h3 class="custom-h3">COVID Bouncer</h3>
+
+    <headline headline="Für heute gebuchter Raum"/>
+    <current-booked-room />
+
+    <headline headline="Raumliste"/>
+    <roomList />
+
     <div>
       <headline headline="Aktuelle Corona-Zahlen" />
       <covid-statistic :objectIds="this.covidIds"/>

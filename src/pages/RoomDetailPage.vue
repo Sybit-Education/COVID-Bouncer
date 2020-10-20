@@ -6,8 +6,8 @@
       </router-link>
       <circular-load-indicator :value="value" :loadFactor="loadFactor"></circular-load-indicator>
     </div>
-    <div class="main-container">
 
+    <div class="main-container">
       <h4>Aktuell eingechecked:</h4>
       <ul class="userList">
          <li v-for="user in userList" :key="user.id">
@@ -32,6 +32,7 @@
 <script>
 import { roomService } from '../services/Room.service'
 import CircularLoadIndicator from 'components/CircularLoadIndicator'
+
 export default {
   name: 'RoomDetailPage',
   components: { CircularLoadIndicator },
