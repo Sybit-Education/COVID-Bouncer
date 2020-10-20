@@ -18,7 +18,7 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
-    "firebase": "^7.19.0",
+    "firebase": "^7.24.0",
     "quasar": "^1.13.1",
     "vue": "^2.6.12",
     "vue-qrcode-reader": "^2.3.10",
