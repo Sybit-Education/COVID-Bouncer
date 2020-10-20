@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'CircularLoad',
+  name: 'CircularLoadIndicator',
   props: {
     loadFactor: {
     },
