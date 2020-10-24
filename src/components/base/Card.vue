@@ -1,12 +1,12 @@
 <template>
   <div class="card">
-    <h2 class="text-center">{{ locationName }}</h2>
+    <h2 class="text-center">{{ name }}</h2>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['locationName']
+  props: ['name']
 }
 </script>
 
@@ -17,4 +17,5 @@ export default {
   border: 2px solid black
   border-radius: 8px
   margin-bottom: 2rem
+  color: black
 </style>
