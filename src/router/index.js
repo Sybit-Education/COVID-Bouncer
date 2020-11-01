@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import BuildingView from '../views/BuildingView'
 import RoomView from '../views/RoomView.vue'
+import RoomDetail from '../views/RoomDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/locations/buildings',
     name: 'Rooms',
     component: RoomView
+  },
+  {
+    path: '/locations/buildings/room',
+    name: 'RoomDetail',
+    component: RoomDetail
   },
   {
     path: '/about',

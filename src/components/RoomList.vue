@@ -1,8 +1,8 @@
 <template>
   <div>
     <div :key="room.key" v-for="room in rooms">
-      <router-link style="text-decoration: none" :to="{name:'Rooms', params: {location: location, building: building}}">
-      <card :name=room></card>
+      <router-link style="text-decoration: none" :to="{name:'RoomDetail', params: {roomID: Object.keys(room)}}">
+        <card :name="Object.values(room)[0].roomName"></card>
       </router-link>
       </div>
   </div>
@@ -33,21 +33,8 @@ export default {
         snap.forEach(doc => {
           rooms.push({ [doc.id]: doc.data() })
         })
-        this.rooms = this.filterLocations(rooms)
+        this.rooms = rooms
       })
-  },
-  methods: {
-    filterLocations: function (Rooms) {
-      const rooms = []
-      const sortedrooms = []
-      Rooms.forEach(room => rooms.push(Object.entries(room)[0][1].roomName))
-      rooms.map(function (singleBuilding) {
-        if (!sortedrooms.includes(singleBuilding)) {
-          sortedrooms.push(singleBuilding)
-        }
-      })
-      return sortedrooms
-    }
   }
 }
 </script>
