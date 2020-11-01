@@ -5,9 +5,7 @@
       <div class="col-8 align-self-center text-center"><h1 class="mt-0 mb-0 ">SyRooms</h1></div>
       <div class="col-2 align-self-center text-center"></div>
     </div>
-    <div class="container">
     <router-view/>
-    </div>
   </div>
 </template>
 
