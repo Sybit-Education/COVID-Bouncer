@@ -34,7 +34,7 @@
           class="w-100 input-styling"
           v-model="signIn.initials"
           required
-          placeholder="Example: mmn"></b-form-input>
+          placeholder="mmn"></b-form-input>
       </b-form-group>
       </b-col>
       <b-col>
