@@ -6,11 +6,8 @@
       </router-link>
       <circular-load-indicator :value="value" :loadFactor="loadFactor"></circular-load-indicator>
     </div>
-    <div class="main-container mt-4">
-      <div class="submitButton">
-        <q-btn color="primary" @click="checkIn">Check in</q-btn>
-        <q-btn color="primary" @click="removeMe">Remove me</q-btn>
-      </div>
+
+    <div class="main-container">
       <h4>Aktuell eingechecked:</h4>
       <ul class="userList">
          <li v-for="user in userList" :key="user.id">
@@ -34,7 +31,8 @@
 
 <script>
 import { roomService } from '../services/Room.service'
-import CircularLoadIndicator from './components/CircularLoadIndicator'
+import CircularLoadIndicator from 'components/CircularLoadIndicator'
+
 export default {
   name: 'RoomDetailPage',
   components: { CircularLoadIndicator },
@@ -94,11 +92,4 @@ export default {
   .routerLink
     text-decoration: none
     color: white
-
-  .main-container
-    margin-top: 1rem
-
-  .submitButton
-    display: flex
-    justify-content: space-evenly
 </style>

@@ -16,6 +16,7 @@ class RoomService {
       .collection(COLLECTION_NAME)
       .get()
       .then((querySnapshot) => {
+        this.list = []
         querySnapshot.forEach((doc) => {
           this.list.push({
             id: doc.id,

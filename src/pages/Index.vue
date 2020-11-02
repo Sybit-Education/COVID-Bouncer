@@ -1,5 +1,6 @@
 <template>
   <div class=main-container>
+
     <h3 class="custom-h3">COVID Bouncer</h3>
 
     <headline headline="Für heute gebuchter Raum"/>
