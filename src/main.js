@@ -19,7 +19,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 Vue.use(BootstrapVue)
 
-Vue.use(Notifications)
+Vue.use(Notifications, { max: 5 })
 
 //  Firebase
 Vue.prototype.$firebase = firebase

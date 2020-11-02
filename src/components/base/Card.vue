@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <h2 class="text-center">{{ name }}</h2>
+    <h2 class="text-center mt-3">{{ name }}</h2>
   </div>
 </template>
 

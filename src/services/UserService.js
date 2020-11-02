@@ -12,8 +12,7 @@ class UserService {
     const loadedPassword = await configService
       .fetchMasterPassword()
     if (loadedPassword !== masterPassword) {
-      // TODO: Add Notify for Wrong Password
-      // return Promise.reject('The entered password does not match with the master password')
+      return true
     } else {
       await this.fetchUserByInitials(initials)
         .then(user => {

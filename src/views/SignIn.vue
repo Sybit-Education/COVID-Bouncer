@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-  <div class="signIn w-100" @submit="onSubmit">
+  <div class="signIn w-100">
     <form>
       <b-col>
         <b-form-group id="input-group-first-name" label="Your Firstname:" label-for="input-first-name">
@@ -51,7 +51,7 @@
       </b-form-group>
       </b-col>
       <b-col>
-        <b-button class="w-100 mt-4 sy-background signIn-button" @click="onSubmit">Sign In</b-button>
+        <b-button class="w-100 mt-4 sy-background signIn-button" @click="onSubmit">Sign in</b-button>
       </b-col>
     </form>
   </div>
@@ -73,24 +73,21 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
+    async onSubmit () {
       this.signIn.initials = this.signIn.initials.toLowerCase()
-      userService
-        .signIn(this.signIn)
-        .then(() => {
-          this.$router.push({ name: 'Home' })
-        })
-        .catch(e => {
-          this.signIn.masterPassword = ''
-          this.showNotification(e)
-        })
+      const response = await userService.signIn(this.signIn)
+      if (response) {
+        this.showErrorNotification('The entered password does not match with the master password.')
+      } else {
+        await this.$router.push({ name: 'Home' })
+      }
     },
-    showNotification (message) {
+    showErrorNotification (message) {
       this.$notify({
-        message,
-        color: 'negative',
-        position: 'top',
-        timeout: 10000
+        group: 'error',
+        type: 'error',
+        title: 'Important message',
+        text: message
       })
     }
   }
