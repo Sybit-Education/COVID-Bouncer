@@ -12,11 +12,14 @@
           </radial-progress-bar>
       </div>
     </div>
-    <h4>TestName</h4>
+    <div class="row remove-margin w-100 button-row">
+      <covid-button :name="SignInButton"></covid-button>
+    </div>
   </div>
 </template>
 <script>
 import RadialProgressBar from 'vue-radial-progress'
+import covidButton from '@/components/base/Button.vue'
 
 export default {
   name: 'RoomDetail',
@@ -24,11 +27,13 @@ export default {
     return {
       room: [],
       completedSteps: 2,
-      roomID: String
+      roomID: String,
+      SignInButton: 'Sign In'
     }
   },
   components: {
-    RadialProgressBar
+    RadialProgressBar,
+    covidButton
   },
   created () {
     this.roomID = this.$route.params.roomID
@@ -66,5 +71,9 @@ export default {
   color: white
   margin-left: 0
   margin-right: 0
+
+.button-row
+  position: absolute
+  bottom: 10px
 
 </style>
