@@ -6,6 +6,7 @@ import store from './store'
 import { BootstrapVue } from 'bootstrap-vue'
 //  Bootstrap & main Variables
 import './assets/app.sass'
+import Notifications from 'vue-notification'
 
 //  Firebase
 import firebase from 'firebase'
@@ -16,9 +17,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-// Install BootstrapVue
-
 Vue.use(BootstrapVue)
+
+Vue.use(Notifications)
 
 //  Firebase
 Vue.prototype.$firebase = firebase

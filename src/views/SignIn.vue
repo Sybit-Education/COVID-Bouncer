@@ -90,7 +90,7 @@ export default {
         })
     },
     showNotification (message) {
-      this.notify({
+      this.$notify({
         message,
         color: 'negative',
         position: 'top',
