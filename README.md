@@ -9,7 +9,7 @@ Currently, we have to live by smart distancing because of SARS-CoV-2 the Corona-
 A lot of bureaus for our teams are designed to have less than 1,50 meters distance for a save
 between our colleagues. We have to close some places.
 
-For sure, since March 2020 most of us work in homeoffice, also our trainees, which built
+For sure, since March 2020 most of us work at home, also our trainees, which built
 this app in a remote hackathon. But sometimes it is required to be together to work
 on some special things. For this situation, we track in Excel sheets where we plan to work for the next days to solve two problems:
 
