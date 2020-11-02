@@ -1,17 +1,19 @@
 <template>
   <div class="home">
+    <navbar></navbar>
     <location-list></location-list>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import Navbar from '@/components/base/Navbar'
 import LocationList from '@/components/LocationList'
 
 export default {
   name: 'Home',
   components: {
-    LocationList
+    LocationList,
+    Navbar
   }
 }
 </script>
