@@ -12,6 +12,7 @@ class UserService {
     const loadedPassword = await configService
       .fetchMasterPassword()
     if (loadedPassword !== masterPassword) {
+      // TODO: Add Notify for Wrong Password
       // return Promise.reject('The entered password does not match with the master password')
     } else {
       await this.fetchUserByInitials(initials)
@@ -32,7 +33,7 @@ class UserService {
         })
         .then(user2 => {
           this.user = user2
-          localStorage.set('userId', user2.id)
+          localStorage.userId = user2.id
         })
     }
   }
@@ -82,7 +83,7 @@ class UserService {
   }
 
   logout () {
-    localStorage.remove('userId')
+    localStorage.removeItem('userId')
     this.user = null
   }
 }
