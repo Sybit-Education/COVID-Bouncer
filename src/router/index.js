@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import { userService } from '@/services/UserService'
 
 Vue.use(VueRouter)
 
@@ -8,6 +9,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
+    beforeEnter: guard,
     component: Home
   },
   {
@@ -21,7 +23,14 @@ const routes = [
   {
     path: '/signin',
     name: 'SignIn',
-    component: () => import(/* webpackChunkName: "signing" */'../views/SignIn.vue')
+    component: () => import(/* webpackChunkName: "signing" */'../views/SignIn.vue'),
+    beforeEnter: (to, from, next) => {
+      if (userService.isLoggedIn()) {
+        next({ name: 'home' })
+      } else {
+        next()
+      }
+    }
   }
 ]
 
@@ -30,5 +39,13 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+function guard (to, from, next) {
+  if (userService.isLoggedIn()) {
+    next()
+  } else {
+    next({ name: 'signin' })
+  }
+}
 
 export default router

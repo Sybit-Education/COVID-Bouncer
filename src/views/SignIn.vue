@@ -46,6 +46,7 @@
         <b-form-input
           id="input-master-password"
           type="password"
+          autocomplete="on"
           class="w-100"
           v-model="signIn.masterPassword"
           required></b-form-input>
