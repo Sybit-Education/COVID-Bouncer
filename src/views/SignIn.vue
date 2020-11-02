@@ -1,13 +1,12 @@
 <template>
-  <div class="container">
     <div class="row">
-  <div class="signIn" @submit="onSubmit">
+  <div class="signIn w-100" @submit="onSubmit">
     <form>
       <b-col>
-        <b-form-group id="input-group-first-name" label="Your first name:" label-for="input-first-name">
+        <b-form-group id="input-group-first-name" label="Your Firstname:" label-for="input-first-name">
           <b-form-input
             id="input-first-name"
-            class="w-100"
+            class="w-100 input-styling"
             type="text"
             v-model="signIn.firstName"
             required
@@ -16,11 +15,11 @@
         </b-form-group>
       </b-col>
       <b-col>
-      <b-form-group id="input-group-last-name" label="Your last name:" label-for="input-last-name">
+      <b-form-group id="input-group-last-name" label="Your Lastname:" label-for="input-last-name">
         <b-form-input
           id="input-last-name"
           type="text"
-          class="w-100"
+          class="w-100 input-styling"
           v-model="signIn.lastName"
           required
           placeholder="Mustermann">
@@ -28,34 +27,35 @@
       </b-form-group>
       </b-col>
       <b-col>
-      <b-form-group id="input-group-initials" label="Your initials:" label-for="input-initials">
+      <b-form-group id="input-group-initials" label="Your Initials:" label-for="input-initials">
         <b-form-input
           id="input-initials"
           type="text"
-          class="w-100"
+          class="w-100 input-styling"
           v-model="signIn.initials"
           required
           placeholder="Example: mmn"></b-form-input>
       </b-form-group>
       </b-col>
       <b-col>
-      <b-form-group id="input-group-master-password" label="Master password:" label-for="input-master-password">
+      <b-form-group id="input-group-master-password" label="Master Password:" label-for="input-master-password">
         <b-form-input
           id="input-master-password"
           type="password"
           autocomplete="on"
-          class="w-100"
+          class="w-100 input-styling"
           v-model="signIn.masterPassword"
-          required></b-form-input>
+          required
+          placeholder="Enter master password"
+          ></b-form-input>
       </b-form-group>
       </b-col>
       <b-col>
-        <b-button @click="onSubmit">Sign-in</b-button>
+        <b-button class="w-100 mt-4 sy-background signIn-button" @click="onSubmit">Sign-in</b-button>
       </b-col>
     </form>
   </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -99,11 +99,16 @@ export default {
 
 <style lang="sass" scoped>
 .signIn-button
-  background-color: green
+  border: none
+  font-weight: bold
 
 .input-first-name
   width: 100%
   border: none
   border-bottom: 2px solid black
   margin-bottom: 2rem
+
+.input-styling:focus
+  box-shadow: 0 0 0 0.2rem rgba(181, 22, 131, 0.25)
+  border: none
 </style>
