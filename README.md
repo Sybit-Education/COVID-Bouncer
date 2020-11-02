@@ -82,7 +82,7 @@ VUE_APP_COVID_STATISTIC_OBJECT_ID_LIST="211,119,27,98,200"
 It is a comma separated list of the object-ids to show data of these areas.
 
 The `OBJECTID`s could be found on a map at:
-[https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/917fc37a709542548cc3be077a786c17_0?geometry=-24.127%2C46.244%2C44.911%2C55.866]
+https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/917fc37a709542548cc3be077a786c17_0?geometry=-24.127%2C46.244%2C44.911%2C55.866
 
 ## License
 
