@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import { userService } from '@/services/UserService'
 import BuildingView from '../views/BuildingView'
 import RoomView from '../views/RoomView.vue'
+import SignIn from '../views/SignIn'
 
 Vue.use(VueRouter)
 
@@ -17,11 +18,13 @@ const routes = [
   {
     path: '/locations',
     name: 'Buildings',
+    beforeEnter: guard,
     component: BuildingView
   },
   {
     path: '/locations/buildings',
     name: 'Rooms',
+    beforeEnter: guard,
     component: RoomView
   },
   {
@@ -35,10 +38,10 @@ const routes = [
   {
     path: '/signin',
     name: 'SignIn',
-    component: () => import(/* webpackChunkName: "signing" */'../views/SignIn.vue'),
+    component: SignIn,
     beforeEnter: (to, from, next) => {
       if (userService.isLoggedIn()) {
-        next({ name: 'home' })
+        next({ name: 'Home' })
       } else {
         next()
       }
@@ -56,7 +59,7 @@ function guard (to, from, next) {
   if (userService.isLoggedIn()) {
     next()
   } else {
-    next({ name: 'signin' })
+    next({ name: 'SignIn' })
   }
 }
 

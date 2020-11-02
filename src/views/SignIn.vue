@@ -15,7 +15,6 @@
           </b-form-input>
         </b-form-group>
       </b-col>
-
       <b-col>
       <b-form-group id="input-group-last-name" label="Your last name:" label-for="input-last-name">
         <b-form-input
@@ -28,7 +27,6 @@
         </b-form-input>
       </b-form-group>
       </b-col>
-
       <b-col>
       <b-form-group id="input-group-initials" label="Your initials:" label-for="input-initials">
         <b-form-input
@@ -40,7 +38,6 @@
           placeholder="Example: mmn"></b-form-input>
       </b-form-group>
       </b-col>
-
       <b-col>
       <b-form-group id="input-group-master-password" label="Master password:" label-for="input-master-password">
         <b-form-input
@@ -52,7 +49,6 @@
           required></b-form-input>
       </b-form-group>
       </b-col>
-
       <b-col>
         <b-button @click="onSubmit">Sign-in</b-button>
       </b-col>
@@ -64,7 +60,6 @@
 
 <script>
 import { userService } from '@/services/UserService'
-
 export default {
   name: 'SignIn',
   data () {
@@ -83,7 +78,7 @@ export default {
       userService
         .signIn(this.signIn)
         .then(() => {
-          this.$router.push({ name: 'home' })
+          this.$router.push({ name: 'Home' })
         })
         .catch(e => {
           this.signIn.masterPassword = ''
