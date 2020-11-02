@@ -5,7 +5,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import LocationList from '@/components/LocationList'
 
 export default {

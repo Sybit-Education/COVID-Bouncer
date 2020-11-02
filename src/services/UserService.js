@@ -1,5 +1,5 @@
 import { $db } from '@/services/firebase'
-import { configService } from '@/services/Config.service'
+import { configService } from '@/services/Config.service.js'
 
 const COLLECTION_NAME = 'user'
 

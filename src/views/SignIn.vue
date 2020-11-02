@@ -2,9 +2,9 @@
   <div class="container">
     <div class="row">
   <div class="signIn" @submit="onSubmit">
-    <form @submit="onSubmit">
+    <form>
       <b-col>
-        <b-form-group id="input-group-first-name" label="Your first name:" label-for="input-last-name">
+        <b-form-group id="input-group-first-name" label="Your first name:" label-for="input-first-name">
           <b-form-input
             id="input-first-name"
             class="w-100"
@@ -53,7 +53,7 @@
       </b-col>
 
       <b-col>
-        <b-button type="submit">Sign-in</b-button>
+        <b-button @click="onSubmit">Sign-in</b-button>
       </b-col>
     </form>
   </div>
