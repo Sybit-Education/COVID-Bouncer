@@ -3,7 +3,7 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
-
+import { BootstrapVue } from 'bootstrap-vue'
 //  Bootstrap & main Variables
 import './assets/app.sass'
 
@@ -15,6 +15,10 @@ import * as fbService from './services/firebase'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+// Install BootstrapVue
+
+Vue.use(BootstrapVue)
 
 //  Firebase
 Vue.prototype.$firebase = firebase

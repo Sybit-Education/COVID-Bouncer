@@ -2,33 +2,42 @@
   <div class="container">
     <div class="row">
   <div class="signIn" @submit="onSubmit">
-    <form>
-      <div class="col">
-        <input
-          id="input-first-name"
-          class="input-first-name"
-          v-model="signIn.firstName"
-          type="text"
-          required
-          placeholder="Enter first name"/>
-      </div>
+    <form @submit="onSubmit">
+      <b-col>
+        <b-form-group id="input-group-first-name" label="Your first name:" label-for="input-last-name">
+          <b-form-input
+            id="input-first-name"
+            class="w-100"
+            type="text"
+            v-model="signIn.firstName"
+            required
+            placeholder="Max">
+          </b-form-input>
+        </b-form-group>
+      </b-col>
+
       <b-col>
       <b-form-group id="input-group-last-name" label="Your last name:" label-for="input-last-name">
         <b-form-input
           id="input-last-name"
+          type="text"
+          class="w-100"
           v-model="signIn.lastName"
           required
-          placeholder="Enter last name">
+          placeholder="Mustermann">
         </b-form-input>
       </b-form-group>
       </b-col>
+
       <b-col>
       <b-form-group id="input-group-initials" label="Your initials:" label-for="input-initials">
         <b-form-input
           id="input-initials"
+          type="text"
+          class="w-100"
           v-model="signIn.initials"
           required
-          placeholder="Enter your initials (3 digits)"></b-form-input>
+          placeholder="Example: mmn"></b-form-input>
       </b-form-group>
       </b-col>
 
@@ -36,15 +45,16 @@
       <b-form-group id="input-group-master-password" label="Master password:" label-for="input-master-password">
         <b-form-input
           id="input-master-password"
+          type="password"
+          class="w-100"
           v-model="signIn.masterPassword"
-          required
-          placeholder="Master password"></b-form-input>
+          required></b-form-input>
       </b-form-group>
       </b-col>
 
-      <div class="col">
-      <button class="signIn-button" type="submit" variant="primary">Sign-in</button>
-      </div>
+      <b-col>
+        <b-button type="submit">Sign-in</b-button>
+      </b-col>
     </form>
   </div>
     </div>
