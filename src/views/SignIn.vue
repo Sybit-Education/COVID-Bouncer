@@ -51,7 +51,7 @@
       </b-form-group>
       </b-col>
       <b-col>
-        <b-button class="w-100 mt-4 sy-background signIn-button" @click="onSubmit">Sign-in</b-button>
+        <b-button class="w-100 mt-4 sy-background signIn-button" @click="onSubmit">Sign In</b-button>
       </b-col>
     </form>
   </div>
