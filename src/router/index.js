@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import { userService } from '@/services/UserService'
+import BuildingView from '../views/BuildingView'
+import RoomView from '../views/RoomView.vue'
 
 Vue.use(VueRouter)
 
@@ -11,6 +13,16 @@ const routes = [
     name: 'Home',
     beforeEnter: guard,
     component: Home
+  },
+  {
+    path: '/locations',
+    name: 'Buildings',
+    component: BuildingView
+  },
+  {
+    path: '/locations/buildings',
+    name: 'Rooms',
+    component: RoomView
   },
   {
     path: '/about',
