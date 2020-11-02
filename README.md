@@ -2,6 +2,7 @@
 [![Sybit](https://img.shields.io/badge/-Sybit-b71583.svg)](https://www.sybit.de/)
 ![Node.js CI](https://github.com/Sybit-Education/COVID-Bouncer/workflows/Node.js%20CI/badge.svg)
 [![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/Sybit-Education/COVID-Bouncer/blob/master/LICENSE)
 ## Background
 
 Currently, we have to live by smart distancing because of SARS-CoV-2 the Corona-Virus.
