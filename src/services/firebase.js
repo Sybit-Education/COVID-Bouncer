@@ -20,6 +20,5 @@ export const fBInit = () => {
 }
 
 export const $db = () => {
-  console.log('Test')
   return firebase.firestore()
 }
