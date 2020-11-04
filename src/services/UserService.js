@@ -39,9 +39,8 @@ class UserService {
 
   async fetchUserByInitials (initials) {
     const response = await $db().collection(COLLECTION_NAME).where('initials', '==', initials).get()
-    let user = null
     response.forEach(userDoc => {
-      user = {
+     const user = {
         id: userDoc.id,
         firstName: userDoc.data().firstName,
         lastName: userDoc.data().lastName,
