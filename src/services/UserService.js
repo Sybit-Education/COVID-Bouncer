@@ -9,8 +9,7 @@ class UserService {
   }
 
   async signIn ({ firstName, lastName, initials, masterPassword }) {
-    const loadedPassword = await configService
-      .fetchMasterPassword()
+    const loadedPassword = await configService.fetchMasterPassword()
     if (loadedPassword !== masterPassword) {
       return true
     } else {
@@ -39,16 +38,15 @@ class UserService {
 
   async fetchUserByInitials (initials) {
     const response = await $db().collection(COLLECTION_NAME).where('initials', '==', initials).get()
-    let user = null
     response.forEach(userDoc => {
-      user = {
+      const user = {
         id: userDoc.id,
         firstName: userDoc.data().firstName,
         lastName: userDoc.data().lastName,
         initials: userDoc.data().initials
       }
+      return user
     })
-    return user
   }
 
   async fetchUserById (userId) {
@@ -65,9 +63,7 @@ class UserService {
     const userId = localStorage.getItem('userId')
     let result = null
 
-    if (!userId) {
-      result = null
-    } else {
+    if (userId) {
       if (this.user && this.user.userId === userId) {
         result = this.user
       } else {

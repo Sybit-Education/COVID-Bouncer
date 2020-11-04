@@ -1,16 +1,15 @@
 <template>
-    <div class="row">
-  <div class="signIn w-100">
+<b-row>
+  <b-col class="signIn">
     <form>
       <b-col>
         <b-form-group id="input-group-first-name" label="Your Firstname:" label-for="input-first-name">
           <b-form-input
             id="input-first-name"
-            class="w-100 input-styling"
+            class="input-styling"
             type="text"
             v-model="signIn.firstName"
-            required
-            placeholder="Max">
+            required>
           </b-form-input>
         </b-form-group>
       </b-col>
@@ -19,10 +18,9 @@
         <b-form-input
           id="input-last-name"
           type="text"
-          class="w-100 input-styling"
+          class="input-styling"
           v-model="signIn.lastName"
-          required
-          placeholder="Mustermann">
+          required>
         </b-form-input>
       </b-form-group>
       </b-col>
@@ -31,10 +29,13 @@
         <b-form-input
           id="input-initials"
           type="text"
-          class="w-100 input-styling"
+          class="input-styling"
           v-model="signIn.initials"
-          required
-          placeholder="mmn"></b-form-input>
+          required></b-form-input>
+        <b-form-text id="initials-help-block">
+          Your initials will be used as a username. This in connection with your email ensures a uniqueness.
+          Example: mmn
+        </b-form-text>
       </b-form-group>
       </b-col>
       <b-col>
@@ -43,19 +44,18 @@
           id="input-master-password"
           type="password"
           autocomplete="on"
-          class="w-100 input-styling"
+          class="input-styling"
           v-model="signIn.masterPassword"
           required
-          placeholder="Enter master password"
           ></b-form-input>
       </b-form-group>
       </b-col>
       <b-col>
-        <b-button class="w-100 mt-4 sy-background signIn-button" @click="onSubmit">Sign in</b-button>
+        <b-button class="mt-2 sy-background signIn-button" @click="onSubmit">Sign in</b-button>
       </b-col>
     </form>
-  </div>
-    </div>
+  </b-col>
+</b-row>
 </template>
 
 <script>
