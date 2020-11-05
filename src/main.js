@@ -3,9 +3,10 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
-
+import { BootstrapVue } from 'bootstrap-vue'
 //  Bootstrap & main Variables
 import './assets/app.sass'
+import Notifications from 'vue-notification'
 
 //  Firebase
 import firebase from 'firebase'
@@ -15,6 +16,10 @@ import * as fbService from './services/firebase'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+Vue.use(BootstrapVue)
+
+Vue.use(Notifications, { max: 5 })
 
 //  Firebase
 Vue.prototype.$firebase = firebase
