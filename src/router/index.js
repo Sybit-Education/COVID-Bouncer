@@ -15,24 +15,26 @@ const routes = [
     path: '/',
     name: 'Home',
     beforeEnter: guard,
-    component: Home
+    component: Home,
+    meta: { displayHeaderBackButton: false }
   },
   {
-    path: '/locations',
+    path: '/:location',
     name: 'Buildings',
     beforeEnter: guard,
     component: BuildingView
   },
   {
-    path: '/locations/buildings',
+    path: '/:location/:building',
     name: 'Rooms',
     beforeEnter: guard,
     component: RoomView
   },
   {
-    path: '/locations/buildings/room',
+    path: '/:roomID',
     name: 'RoomDetail',
-    component: RoomDetail
+    component: RoomDetail,
+    meta: { displayHeader: false }
   },
   {
     path: '/about',
@@ -49,7 +51,8 @@ const routes = [
       } else {
         next()
       }
-    }
+    },
+    meta: { displayHeaderBackButton: false }
   }
 ]
 
