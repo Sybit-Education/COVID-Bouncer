@@ -59,6 +59,9 @@ export default {
         .get()
         .then(snap => {
           if (snap.docs.length > 0) {
+            // Wenn die Subcollection da ist. Suche das Doc mit dem Heutigen Datum, Wenn das Datum nicht das ist, Füge das Doc hinzu
+            const todayDoc = snap.docs.filter(doc => doc.id === this.currentDate)
+            console.log('todayDoc', todayDoc[0].data())
             snap.forEach(doc => {
               if (doc.id === this.currentDate) {
                 console.log('Geilo', doc.data())
