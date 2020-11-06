@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     totalSteps: function () {
-      return this.room.capacity
+      return parseInt(this.room.capacity)
     }
   }
 }
