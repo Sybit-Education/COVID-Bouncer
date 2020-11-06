@@ -1,7 +1,7 @@
 <template>
-  <div class="covid-button w-100 d-flex justify-content-center align-items-center">
+  <b-col class="covid-button d-flex justify-content-center align-items-center">
     <p class="mb-0 mt-0 button-text">{{ name }}</p>
-  </div>
+  </b-col>
 </template>
 <script>
 export default {
@@ -14,8 +14,6 @@ export default {
   border-radius: 8px
   background-color: #b51683
   color: white
-  margin-left: 15px
-  margin-right: 15px
 
 .button-text
   font-weight: bold

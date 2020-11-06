@@ -1,7 +1,7 @@
 <template>
-  <div class="card">
+  <b-col class="card">
     <h2 class="text-center mt-3">{{ name }}</h2>
-  </div>
+  </b-col>
 </template>
 
 <script>
@@ -12,7 +12,6 @@ export default {
 
 <style lang="sass" scoped>
 .card
-  width: 100%
   height: 80px
   border: 2px solid black
   border-radius: 8px

@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
     <building-list :locationName=location></building-list>
   </div>
 </template>
@@ -21,8 +21,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass" scoped>
-.home
-  overflow-y: hidden
-</style>

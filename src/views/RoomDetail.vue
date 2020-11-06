@@ -1,20 +1,20 @@
 <template>
   <div class="room-detail">
-    <div class="room-detail-header row">
-      <div class="col-8 h-100 d-flex align-items-center"><h2 class="mt-0 mb-0">{{ this.room.roomName }}</h2></div>
-      <div class="col-4 h-100 d-flex justify-content-center">
+    <b-row class="room-detail-header">
+      <b-col class="h-100 d-flex align-items-center" cols="8"><h2 class="mt-0 mb-0">{{ this.room.roomName }}</h2></b-col>
+      <b-col class="h-100 d-flex justify-content-center" cols="4">
         <radial-progress-bar :diameter="55" :completed-steps="completedSteps" :total-steps="totalSteps()"
         :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent" startColor="#FFF" stopColor="#FFF" class="align-self-center">
-        <div class="row">
+        <b-row>
           <p class="mt-0 mb-0">{{ completedSteps }}</p>
           <p class="mt-0 mb-0">/{{ totalSteps() }}</p>
-          </div>
+          </b-row>
           </radial-progress-bar>
-      </div>
-    </div>
-    <div class="row remove-margin w-100 button-row">
+      </b-col>
+    </b-row>
+    <b-col class="button-row">
       <covid-button :name="SignInButton"></covid-button>
-    </div>
+    </b-col>
   </div>
 </template>
 <script>
@@ -64,7 +64,6 @@ export default {
 
 .room-detail-header
   height: 75px
-  width: 100%
   border-bottom-left-radius: 8px
   border-bottom-right-radius: 8px
   background-color: #b51683
