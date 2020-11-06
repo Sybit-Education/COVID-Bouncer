@@ -42,7 +42,7 @@ export default {
     const db = this.$firebase.firestore()
     db
       .collection('Rooms')
-      .doc(this.roomID[0].toString())
+      .doc(this.roomID)
       .get()
       .then(doc => {
         this.room = doc.data()

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div :key="room.key" v-for="room in rooms">
-      <router-link style="text-decoration: none" :to="{name:'RoomDetail', params: {roomID: Object.keys(room)}}">
+      <router-link style="text-decoration: none" :to="{name:'RoomDetail', params: {roomID: Object.keys(room).toString()}}">
         <card :name="Object.values(room)[0].roomName"></card>
       </router-link>
       </div>
