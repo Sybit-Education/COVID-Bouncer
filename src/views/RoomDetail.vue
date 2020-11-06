@@ -12,7 +12,7 @@
           </radial-progress-bar>
       </b-col>
     </b-row>
-    <b-col class="button-row">
+    <b-col @click="checkIn" class="button-row">
       <covid-button :name="SignInButton"></covid-button>
     </b-col>
   </div>
@@ -28,7 +28,8 @@ export default {
       room: [],
       completedSteps: 2,
       roomID: String,
-      SignInButton: 'Sign In'
+      SignInButton: 'Sign In',
+      currentDate: new Date().toISOString().slice(0, 10)
     }
   },
   components: {
@@ -51,6 +52,33 @@ export default {
   methods: {
     totalSteps: function () {
       return parseInt(this.room.capacity)
+    },
+    checkIn: async function () {
+      const db = await this.$firebase.firestore().collection('Rooms/' + this.roomID + '/CheckIn')
+      db
+        .get()
+        .then(snap => {
+          if (snap.docs.length > 0) {
+            snap.forEach(doc => {
+              if (doc.id === this.currentDate) {
+                console.log('Geilo', doc.data())
+              }
+            })
+          } else {
+            this.setSubcollection()
+          }
+          snap.forEach(doc => {
+            console.log(this.currentDate)
+            console.log(doc.id, doc.data())
+          })
+        })
+    },
+    setSubcollection: async function () {
+      const db = await this.$firebase.firestore().collection('Rooms/' + this.roomID + '/CheckIn').doc(this.currentDate)
+      db.set({
+        date: this.currentDate,
+        user: ['user1']
+      })
     }
   }
 }
