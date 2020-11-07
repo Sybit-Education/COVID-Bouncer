@@ -12,14 +12,21 @@
           </radial-progress-bar>
       </b-col>
     </b-row>
-    <b-col @click="checkIn" class="button-row">
+    <b-row class="button-row w-100">
+    <b-col cols="6" @click="checkIn(currentDate)">
       <covid-button :name="SignInButton"></covid-button>
     </b-col>
+    <b-col cols="6" @click="checkIn(dateTomorrow())">
+      <covid-button :name="SignInTomorrowButton"></covid-button>
+    </b-col>
+    </b-row>
   </div>
 </template>
 <script>
 import RadialProgressBar from 'vue-radial-progress'
 import covidButton from '@/components/base/Button.vue'
+import { fieldValue } from '@/services/firebase'
+import { userService } from '@/services/UserService'
 
 export default {
   name: 'RoomDetail',
@@ -28,7 +35,8 @@ export default {
       room: [],
       completedSteps: 2,
       roomID: String,
-      SignInButton: 'Sign In',
+      SignInButton: 'Sign In Today',
+      SignInTomorrowButton: 'Sign In Tomorrow',
       currentDate: new Date().toISOString().slice(0, 10)
     }
   },
@@ -53,36 +61,30 @@ export default {
     totalSteps: function () {
       return parseInt(this.room.capacity)
     },
-    checkIn: async function () {
-      const db = await this.$firebase.firestore().collection('Rooms/' + this.roomID + '/CheckIn')
-      db
-        .get()
-        .then(snap => {
-          if (snap.docs.length > 0) {
-            // Update Zeitzone?
-            // Wenn die Subcollection da ist. Suche das Doc mit dem Heutigen Datum, Wenn das Datum nicht das ist, Füge das Doc hinzu
-            const todayDoc = snap.docs.filter(doc => doc.id === this.currentDate)
-            console.log('todayDoc', todayDoc[0].data())
-            snap.forEach(doc => {
-              if (doc.id === this.currentDate) {
-                console.log('Geilo', doc.data())
-              }
-            })
-          } else {
-            this.setSubcollection()
-          }
-          snap.forEach(doc => {
-            console.log(this.currentDate)
-            console.log(doc.id, doc.data())
-          })
-        })
+    dateTomorrow: function () {
+      const currentDate = new Date()
+      currentDate.setDate(currentDate.getDate() + 1)
+      return currentDate.toISOString().slice(0, 10)
     },
-    setSubcollection: async function () {
-      const db = await this.$firebase.firestore().collection('Rooms/' + this.roomID + '/CheckIn').doc(this.currentDate)
-      db.set({
-        date: this.currentDate,
-        user: ['user1']
-      })
+    checkIn: async function (currentDate) {
+      const currentUserID = await userService.currentUser()
+        .then(user => user.id)
+      const db = await this.$firebase.firestore().collection('Rooms/' + this.roomID + '/CheckIn')
+      const userRef = await this.$firebase.firestore().doc('user/' + currentUserID)
+      const doc = await db.doc(currentDate).get().then(doc => doc.data())
+      if (doc === undefined) {
+        db.doc(currentDate)
+          .set({
+            date: currentDate,
+            user: [userRef]
+          })
+      } else {
+        if (doc.user.length <= this.room.capacity) {
+          db.doc(currentDate).update({
+            user: fieldValue.arrayUnion(userRef)
+          })
+        }
+      }
     }
   }
 }
@@ -106,5 +108,7 @@ export default {
 .button-row
   position: absolute
   bottom: 10px
+  margin-left: 0
+  margin-right: 0
 
 </style>

@@ -14,6 +14,7 @@ export default {
   border-radius: 8px
   background-color: #b51683
   color: white
+  padding: 0
 
 .button-text
   font-weight: bold
