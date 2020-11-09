@@ -31,7 +31,7 @@ const routes = [
     component: RoomView
   },
   {
-    path: '/:roomID',
+    path: '/:location/:building/:roomName',
     name: 'RoomDetail',
     component: RoomDetail,
     meta: { displayHeader: false }
