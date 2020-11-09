@@ -15,9 +15,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass">
-.main-nav
-  height: 60px
-  margin-bottom: 3rem
-</style>
