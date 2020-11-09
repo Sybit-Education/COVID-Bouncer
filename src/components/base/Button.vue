@@ -1,6 +1,6 @@
 <template>
   <b-col class="covid-button d-flex justify-content-center align-items-center">
-    <p class="mb-0 mt-0 button-text">{{ name }}</p>
+    <p class="my-0 button-text">{{ name }}</p>
   </b-col>
 </template>
 <script>
