@@ -1,31 +1,33 @@
 <template>
   <div class="room-detail">
     <b-row class="room-detail-header">
-      <b-col class="h-100 d-flex align-items-center" cols="8"><h2 class="mt-0 mb-0">{{ this.room.roomName }}</h2></b-col>
-      <b-col class="h-100 d-flex justify-content-center" cols="4">
+      <b-col cols="8" class="h-100 d-flex align-items-center">
+        <h2 class="my0">{{ this.room.roomName }}</h2>
+      </b-col>
+      <b-col cols="4" class="h-100 d-flex justify-content-center">
         <radial-progress-bar :diameter="55" :completed-steps="completedSteps" :total-steps="totalSteps()"
         :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent" startColor="#FFF" stopColor="#FFF" class="align-self-center">
-        <b-row>
-          <p class="mt-0 mb-0">{{ completedSteps }}</p>
-          <p class="mt-0 mb-0">/{{ totalSteps() }}</p>
+          <b-row>
+            <p class="my-0">{{ completedSteps }}</p>
+            <p class="my-0">/{{ totalSteps() }}</p>
           </b-row>
-          </radial-progress-bar>
+        </radial-progress-bar>
       </b-col>
     </b-row>
     <b-row class="button-row w-100">
-    <b-col cols="6" @click="checkIn(currentDate)">
-      <covid-button :name="SignInButton"></covid-button>
-    </b-col>
-    <b-col cols="6" @click="checkIn(dateTomorrow())">
-      <covid-button :name="SignInTomorrowButton"></covid-button>
-    </b-col>
+      <b-col cols="6" @click="checkIn(currentDate)">
+        <covid-button :name="SignInButton"></covid-button>
+      </b-col>
+      <b-col cols="6" @click="checkIn(dateTomorrow())">
+        <covid-button :name="SignInTomorrowButton"></covid-button>
+      </b-col>
     </b-row>
   </div>
 </template>
 <script>
 import RadialProgressBar from 'vue-radial-progress'
-import covidButton from '@/components/base/Button.vue'
-import { fieldValue } from '@/services/firebase'
+import CovidButton from '@/components/base/Button.vue'
+import { FieldValue } from '@/services/firebase'
 import { userService } from '@/services/UserService'
 
 export default {
@@ -42,7 +44,7 @@ export default {
   },
   components: {
     RadialProgressBar,
-    covidButton
+    CovidButton
   },
   created () {
     this.roomID = this.$route.params.roomID
@@ -78,11 +80,43 @@ export default {
             date: currentDate,
             user: [userRef]
           })
+          .then(
+            this.$notify({
+              group: 'error',
+              type: 'success',
+              title: 'LogIn',
+              text: 'Erfolgreich eingeloggt'
+            })
+          )
+          .catch(error =>
+            this.$notify({
+              group: 'error',
+              type: 'error',
+              title: 'LogIn',
+              text: 'Etwas ist schiefgelaufen' + error
+            })
+          )
       } else {
         if (doc.user.length <= this.room.capacity) {
           db.doc(currentDate).update({
-            user: fieldValue.arrayUnion(userRef)
+            user: FieldValue.arrayUnion(userRef)
           })
+            .then(
+              this.$notify({
+                group: 'error',
+                type: 'success',
+                title: 'LogIn',
+                text: 'Erfolgreich eingeloggt'
+              })
+            )
+            .catch(error =>
+              this.$notify({
+                group: 'error',
+                type: 'error',
+                title: 'LogIn',
+                text: 'Es gab ein Problem bei der Anmeldung' + error
+              })
+            )
         }
       }
     }
