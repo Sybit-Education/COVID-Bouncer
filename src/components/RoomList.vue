@@ -1,8 +1,8 @@
 <template>
   <div>
     <div :key="room.key" v-for="room in rooms">
-      <router-link style="text-decoration: none" :to="{name:'RoomDetail', params: {roomID: Object.keys(room).toString()}}">
-        <card :name="Object.values(room)[0].roomName"></card>
+      <router-link class="text-decoration-none" :to="{name:'RoomDetail', params: {location: locationName, building: buildingName, roomID: room.id, roomName: room.roomName }}">
+        <card :name="room.roomName"></card>
       </router-link>
       </div>
   </div>
@@ -21,8 +21,8 @@ export default {
       rooms: []
     }
   },
-  mounted () {
-    const db = this.$firebase.firestore()
+  async mounted () {
+    const db = await this.$firebase.firestore()
     db
       .collection('Rooms')
       .where('location', '==', this.locationName)
@@ -31,7 +31,8 @@ export default {
       .then(snap => {
         const rooms = []
         snap.forEach(doc => {
-          rooms.push({ [doc.id]: doc.data() })
+          const docData = doc.data()
+          rooms.push({ id: doc.id, roomName: docData.roomName })
         })
         this.rooms = rooms
       })
