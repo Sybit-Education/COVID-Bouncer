@@ -23,4 +23,4 @@ export const $db = () => {
   return firebase.firestore()
 }
 
-export const fieldValue = firebase.firestore.FieldValue
+export const FieldValue = firebase.firestore.FieldValue
