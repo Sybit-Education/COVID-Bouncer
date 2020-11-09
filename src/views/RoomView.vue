@@ -1,6 +1,6 @@
 <template>
   <div>
-    <room-list :buildingName=building :locationName=location></room-list>
+    <room-list :buildingName="building" :locationName="location"></room-list>
   </div>
 </template>
 <script>
