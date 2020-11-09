@@ -27,7 +27,7 @@
 <script>
 import RadialProgressBar from 'vue-radial-progress'
 import CovidButton from '@/components/base/Button.vue'
-import { FieldValue } from '@/services/firebase'
+import { $db, FieldValue } from '@/services/firebase'
 import { userService } from '@/services/UserService'
 
 export default {
@@ -71,8 +71,8 @@ export default {
     checkIn: async function (currentDate) {
       const currentUserID = await userService.currentUser()
         .then(user => user.id)
-      const db = await this.$firebase.firestore().collection('Rooms/' + this.roomID + '/CheckIn')
-      const userRef = await this.$firebase.firestore().doc('user/' + currentUserID)
+      const db = await $db().collection('Rooms/' + this.roomID + '/CheckIn')
+      const userRef = await $db().doc('user/' + currentUserID)
       const doc = await db.doc(currentDate).get().then(doc => doc.data())
       if (doc === undefined) {
         db.doc(currentDate)
