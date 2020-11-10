@@ -22,3 +22,5 @@ export const fBInit = () => {
 export const $db = () => {
   return firebase.firestore()
 }
+
+export const FieldValue = firebase.firestore.FieldValue

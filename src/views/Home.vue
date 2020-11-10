@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
     <location-list></location-list>
   </div>
 </template>
@@ -14,8 +14,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass" scoped>
-.home
-  overflow-y: hidden
-</style>

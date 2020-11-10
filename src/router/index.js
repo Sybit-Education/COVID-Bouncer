@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import { userService } from '@/services/UserService'
 import BuildingView from '../views/BuildingView'
 import RoomView from '../views/RoomView.vue'
+import RoomDetail from '../views/RoomDetail.vue'
+import About from '../views/About.vue'
 import SignIn from '../views/SignIn'
 
 Vue.use(VueRouter)
@@ -13,27 +15,31 @@ const routes = [
     path: '/',
     name: 'Home',
     beforeEnter: guard,
-    component: Home
+    component: Home,
+    meta: { displayHeaderBackButton: false }
   },
   {
-    path: '/locations',
+    path: '/:location',
     name: 'Buildings',
     beforeEnter: guard,
     component: BuildingView
   },
   {
-    path: '/locations/buildings',
+    path: '/:location/:building',
     name: 'Rooms',
     beforeEnter: guard,
     component: RoomView
   },
   {
+    path: '/:location/:building/:roomName',
+    name: 'RoomDetail',
+    component: RoomDetail,
+    meta: { displayHeader: false }
+  },
+  {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: About
   },
   {
     path: '/signin',
@@ -45,7 +51,8 @@ const routes = [
       } else {
         next()
       }
-    }
+    },
+    meta: { displayHeaderBackButton: false }
   }
 ]
 

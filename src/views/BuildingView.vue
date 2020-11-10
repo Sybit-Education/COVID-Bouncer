@@ -1,10 +1,9 @@
 <template>
-  <div class="home">
-    <building-list :locationName=location></building-list>
+  <div>
+    <building-list :locationName="location"></building-list>
   </div>
 </template>
 <script>
-// @ is an alias to /src
 import BuildingList from '@/components/BuildingList'
 
 export default {
@@ -22,8 +21,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass" scoped>
-.home
-  overflow-y: hidden
-</style>
