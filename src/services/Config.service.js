@@ -1,4 +1,4 @@
-import { $db } from 'src/services/firebase'
+import { $db } from '@/services/firebase.js'
 
 const COLLECTION_NAME = 'config'
 
