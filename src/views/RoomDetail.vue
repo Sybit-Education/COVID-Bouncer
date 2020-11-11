@@ -34,7 +34,9 @@ export default {
   name: 'RoomDetail',
   data () {
     return {
-      room: [],
+      room: {
+        checkIns: []
+      },
       completedSteps: 2,
       roomID: String,
       SignInButton: 'Sign In Today',
@@ -49,17 +51,35 @@ export default {
   created () {
     this.roomID = this.$route.params.roomID
   },
-  mounted () {
-    const db = this.$firebase.firestore()
-    db
-      .collection('Rooms')
-      .doc(this.roomID)
-      .get()
-      .then(doc => {
-        this.room = doc.data()
-      })
+  async mounted () {
+    await this.getRoomKeyValuePairs()
+    await this.getRoomCheckIns()
   },
   methods: {
+    getRoomKeyValuePairs: function () {
+      const db = this.$firebase.firestore()
+      db
+        .collection('Rooms')
+        .doc(this.roomID)
+        .get()
+        .then(doc => {
+          this.room = doc.data()
+          this.room.checkIns = []
+        })
+    },
+    getRoomCheckIns: function () {
+      const db = this.$firebase.firestore()
+      db
+        .collection('Rooms')
+        .doc(this.roomID)
+        .collection('CheckIn')
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach((checkIn) => {
+            this.room.checkIns.push((checkIn.data()))
+          })
+        })
+    },
     totalSteps: function () {
       return parseInt(this.room.capacity)
     },
