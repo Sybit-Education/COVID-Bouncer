@@ -16,10 +16,10 @@
     </b-row>
     <b-row class="button-row w-100">
       <b-col cols="6" @click="checkIn(currentDate)">
-        <covid-button :name="SignInButton"></covid-button>
+        <covid-button :name="SignInButton" v-if="disableButtons"></covid-button>
       </b-col>
       <b-col cols="6" @click="checkIn(dateTomorrow())">
-        <covid-button :name="SignInTomorrowButton"></covid-button>
+        <covid-button :name="SignInTomorrowButton" v-if="disableButtons"></covid-button>
       </b-col>
     </b-row>
   </div>
@@ -41,7 +41,8 @@ export default {
       roomID: String,
       SignInButton: 'Sign In Today',
       SignInTomorrowButton: 'Sign In Tomorrow',
-      currentDate: new Date().toISOString().slice(0, 10)
+      currentDate: new Date().toISOString().slice(0, 10),
+      disableButtons: Boolean
     }
   },
   components: {
@@ -54,6 +55,7 @@ export default {
   async mounted () {
     await this.getRoomKeyValuePairs()
     await this.getRoomCheckIns()
+    await this.isUserSignedIn()
   },
   methods: {
     getRoomKeyValuePairs: function () {
@@ -73,12 +75,19 @@ export default {
         .collection('Rooms')
         .doc(this.roomID)
         .collection('CheckIn')
+        .where('date', '==', this.currentDate)
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach((checkIn) => {
             this.room.checkIns.push((checkIn.data()))
           })
         })
+    },
+    isUserSignedIn: async function () {
+      const currentUserID = await userService.currentUser()
+      if (currentUserID != null) {
+        this.disableButtons = false
+      }
     },
     totalSteps: function () {
       return parseInt(this.room.capacity)
