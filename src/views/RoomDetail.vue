@@ -5,10 +5,16 @@
         <h2 class="my0">{{ this.room.roomName }}</h2>
       </b-col>
       <b-col cols="4" class="h-100 d-flex justify-content-center">
-        <radial-progress-bar :diameter="55" :completed-steps="completedSteps" :total-steps="totalSteps()"
+        <radial-progress-bar :diameter="55" :completed-steps="this.room.checkIns.length" :total-steps="totalSteps()"
         :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent" startColor="#FFF" stopColor="#FFF" class="align-self-center">
           <b-row>
-            <p class="my-0">{{ completedSteps }}</p>
+            <p class="my-0">{{ this.room.checkIns.length }}</p>
+            <p class="my-0">/{{ totalSteps() }}</p>
+          </b-row>
+        </radial-progress-bar><radial-progress-bar :diameter="55" :completed-steps="this.room.checkInsTomorrow.length" :total-steps="totalSteps()"
+        :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent" startColor="#FFF" stopColor="#FFF" class="align-self-center ml-2">
+          <b-row>
+            <p class="my-0">{{ this.room.checkInsTomorrow.length }}</p>
             <p class="my-0">/{{ totalSteps() }}</p>
           </b-row>
         </radial-progress-bar>
@@ -38,7 +44,6 @@ export default {
         checkIns: [],
         checkInsTomorrow: []
       },
-      completedSteps: 2,
       roomID: String,
       SignInButton: 'Sign In Today',
       SignInTomorrowButton: 'Sign In Tomorrow',
@@ -104,14 +109,22 @@ export default {
     },
     isUserSignedIn: async function () {
       const currentUser = await userService.currentUser()
-      if (this.room.checkIns[0].user.some(userId => userId === currentUser.id)) {
-        this.disableButtonToday = true
+      if (this.room.checkIns[0] != null) {
+        if (this.room.checkIns[0].user.some(userId => userId === currentUser.id)) {
+          this.disableButtonToday = true
+        } else {
+          this.disableButtonToday = false
+        }
       }
     },
     isUserSignedInTomorrow: async function () {
       const currentUser = await userService.currentUser()
-      if (this.room.checkInsTomorrow[0].user.some(userId => userId === currentUser.id)) {
-        this.disableButtonTomorrow = true
+      if (this.room.checkInsTomorrow[0] != null) {
+        if (this.room.checkInsTomorrow[0].user.some(userId => userId === currentUser.id)) {
+          this.disableButtonTomorrow = true
+        } else {
+          this.disableButtonTomorrow = false
+        }
       }
     },
     totalSteps: function () {
