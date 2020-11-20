@@ -46,8 +46,8 @@ export default {
         checkInsTomorrow: []
       },
       userIdList: {
-        todayID: [],
-        tomorrowID: []
+        todayIDList: [],
+        tomorrowIDList: []
       },
       roomID: String,
       SignInButton: 'Sign In Today',
@@ -114,16 +114,16 @@ export default {
     },
     fetchUserIDList: async function () {
       if (this.room.checkIns.user) {
-        this.room.checkIns.user.forEach(user => this.userIdList.todayID.push(user.id))
+        this.room.checkIns.user.forEach(user => this.userIdList.todayIDList.push(user.id))
       }
       if (this.room.checkInsTomorrow.user) {
-        this.room.checkInsTomorrow.user.forEach(user => this.userIdList.tomorrowID.push(user.id))
+        this.room.checkInsTomorrow.user.forEach(user => this.userIdList.tomorrowIDList.push(user.id))
       }
     },
     isUserSignedIn: async function () {
       const currentUser = await userService.currentUser()
       if (this.room.checkIns.user) {
-        if (this.userIdList.todayID.some(userId => userId === currentUser.id)) {
+        if (this.userIdList.todayIDList.some(userId => userId === currentUser.id)) {
           this.disableButtonToday = true
         }
       }
@@ -131,7 +131,7 @@ export default {
     isUserSignedInTomorrow: async function () {
       const currentUser = await userService.currentUser()
       if (this.room.checkInsTomorrow.user) {
-        if (this.userIdList.tomorrowID.some(userId => userId === currentUser.id)) {
+        if (this.userIdList.tomorrowIDList.some(userId => userId === currentUser.id)) {
           this.disableButtonTomorrow = true
         }
       }
