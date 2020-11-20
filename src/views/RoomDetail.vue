@@ -16,10 +16,10 @@
     </b-row>
     <b-row class="button-row w-100">
       <b-col cols="6" @click="checkIn(currentDate)">
-        <covid-button :name="SignInButton" :isDisabled="!disableButtons"></covid-button>
+        <covid-button :name="SignInButton" :isDisabled="!disableButtonToday"></covid-button>
       </b-col>
       <b-col cols="6" @click="checkIn(dateTomorrow())">
-        <covid-button :name="SignInTomorrowButton" :isDisabled="!disableButtons"></covid-button>
+        <covid-button :name="SignInTomorrowButton" :isDisabled="!disableButtonTomorrow"></covid-button>
       </b-col>
     </b-row>
   </div>
@@ -35,15 +35,16 @@ export default {
   data () {
     return {
       room: {
-        checkIns: []
+        checkIns: [],
+        checkInsTomorrow: []
       },
-      currentUser: undefined,
       completedSteps: 2,
       roomID: String,
       SignInButton: 'Sign In Today',
       SignInTomorrowButton: 'Sign In Tomorrow',
       currentDate: new Date().toISOString().slice(0, 10),
-      disableButtons: false
+      disableButtonToday: false,
+      disableButtonTomorrow: false
     }
   },
   components: {
@@ -56,7 +57,9 @@ export default {
   async mounted () {
     await this.getRoomKeyValuePairs()
     await this.getRoomCheckIns()
+    await this.getRoomCheckInsTomorrow()
     await this.isUserSignedIn()
+    await this.isUserSignedInTomorrow()
   },
   methods: {
     getRoomKeyValuePairs: function () {
@@ -68,6 +71,7 @@ export default {
         .then(doc => {
           this.room = doc.data()
           this.room.checkIns = []
+          this.room.checkInsTomorrow = []
         })
     },
     getRoomCheckIns: function () {
@@ -84,14 +88,30 @@ export default {
           })
         })
     },
-    getCurrentUser: async function () {
-      const currentUser = await userService.currentUser()
-      this.currentUser = currentUser
+    getRoomCheckInsTomorrow: function () {
+      const db = this.$firebase.firestore()
+      db
+        .collection('Rooms')
+        .doc(this.roomID)
+        .collection('CheckIn')
+        .where('date', '==', this.dateTomorrow())
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach((checkIn) => {
+            this.room.checkInsTomorrow.push((checkIn.data()))
+          })
+        })
     },
     isUserSignedIn: async function () {
-      await this.getCurrentUser()
-      if (this.room.checkIns[0].user.some(userId => userId === this.currentUser.id)) {
-        this.disableButtons = true
+      const currentUser = await userService.currentUser()
+      if (this.room.checkIns[0].user.some(userId => userId === currentUser.id)) {
+        this.disableButtonToday = true
+      }
+    },
+    isUserSignedInTomorrow: async function () {
+      const currentUser = await userService.currentUser()
+      if (this.room.checkInsTomorrow[0].user.some(userId => userId === currentUser.id)) {
+        this.disableButtonTomorrow = true
       }
     },
     totalSteps: function () {
