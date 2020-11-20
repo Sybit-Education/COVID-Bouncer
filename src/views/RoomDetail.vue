@@ -5,17 +5,17 @@
         <h2 class="my0">{{ this.room.roomName }}</h2>
       </b-col>
       <b-col cols="4" class="h-100 d-flex justify-content-center">
-        <radial-progress-bar v-if="this.room.checkIns[0]" :diameter="55" :completed-steps="this.room.checkIns[0].user.length" :total-steps="totalSteps()"
+        <radial-progress-bar v-if="this.room.checkIns.user" :diameter="55" :completed-steps="this.room.checkIns.user.length" :total-steps="totalSteps()"
         :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent" startColor="#FFF" stopColor="#FFF" class="align-self-center">
           <b-row>
-            <p v-if="this.room.checkIns[0]" class="my-0">{{ this.room.checkIns[0].user.length }}</p>
+            <p v-if="this.room.checkIns.user" class="my-0">{{ this.room.checkIns.user.length }}</p>
             <p class="my-0">/{{ totalSteps() }}</p>
           </b-row>
         </radial-progress-bar>
-        <radial-progress-bar v-if="this.room.checkInsTomorrow[0]" :diameter="55" :completed-steps="this.room.checkInsTomorrow[0].user.length" :total-steps="totalSteps()"
+        <radial-progress-bar v-if="this.room.checkInsTomorrow.user" :diameter="55" :completed-steps="this.room.checkInsTomorrow.user.length" :total-steps="totalSteps()"
         :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent" startColor="#FFF" stopColor="#FFF" class="align-self-center ml-2">
           <b-row>
-            <p v-if="this.room.checkInsTomorrow[0]" class="my-0">{{ this.room.checkInsTomorrow[0].user.length }}</p>
+            <p v-if="this.room.checkInsTomorrow.user" class="my-0">{{ this.room.checkInsTomorrow.user.length }}</p>
             <p class="my-0">/{{ totalSteps() }}</p>
           </b-row>
         </radial-progress-bar>
@@ -45,6 +45,10 @@ export default {
         checkIns: [],
         checkInsTomorrow: []
       },
+      userIdList: {
+        todayID: [],
+        tomorrowID: []
+      },
       roomID: String,
       SignInButton: 'Sign In Today',
       SignInTomorrowButton: 'Sign In Tomorrow',
@@ -64,15 +68,15 @@ export default {
     await this.getRoomKeyValuePairs()
     await this.getRoomCheckIns()
     await this.getRoomCheckInsTomorrow()
+    await this.fetchUserIDList()
     await this.isUserSignedIn()
     await this.isUserSignedInTomorrow()
     await this.roomCapacityToday()
     await this.roomCapacityTomorrow()
   },
   methods: {
-    getRoomKeyValuePairs: function () {
-      const db = this.$firebase.firestore()
-      db
+    getRoomKeyValuePairs: async function () {
+      await $db()
         .collection('Rooms')
         .doc(this.roomID)
         .get()
@@ -82,9 +86,8 @@ export default {
           this.room.checkInsTomorrow = []
         })
     },
-    getRoomCheckIns: function () {
-      const db = this.$firebase.firestore()
-      db
+    getRoomCheckIns: async function () {
+      await $db()
         .collection('Rooms')
         .doc(this.roomID)
         .collection('CheckIn')
@@ -92,13 +95,12 @@ export default {
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach((checkIn) => {
-            this.room.checkIns.push((checkIn.data()))
+            this.room.checkIns = checkIn.data()
           })
         })
     },
-    getRoomCheckInsTomorrow: function () {
-      const db = this.$firebase.firestore()
-      db
+    getRoomCheckInsTomorrow: async function () {
+      await $db()
         .collection('Rooms')
         .doc(this.roomID)
         .collection('CheckIn')
@@ -106,36 +108,44 @@ export default {
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach((checkIn) => {
-            this.room.checkInsTomorrow.push((checkIn.data()))
+            this.room.checkInsTomorrow = checkIn.data()
           })
         })
     },
+    fetchUserIDList: async function () {
+      if (this.room.checkIns.user) {
+        this.room.checkIns.user.forEach(user => this.userIdList.todayID.push(user.id))
+      }
+      if (this.room.checkInsTomorrow.user) {
+        this.room.checkInsTomorrow.user.forEach(user => this.userIdList.tomorrowID.push(user.id))
+      }
+    },
     isUserSignedIn: async function () {
       const currentUser = await userService.currentUser()
-      if (this.room.checkIns[0]) {
-        if (this.room.checkIns[0].user.some(userId => userId === currentUser.id)) {
+      if (this.room.checkIns.user) {
+        if (this.userIdList.todayID.some(userId => userId === currentUser.id)) {
           this.disableButtonToday = true
         }
       }
     },
     isUserSignedInTomorrow: async function () {
       const currentUser = await userService.currentUser()
-      if (this.room.checkInsTomorrow[0]) {
-        if (this.room.checkInsTomorrow[0].user.some(userId => userId === currentUser.id)) {
+      if (this.room.checkInsTomorrow.user) {
+        if (this.userIdList.tomorrowID.some(userId => userId === currentUser.id)) {
           this.disableButtonTomorrow = true
         }
       }
     },
     roomCapacityToday: async function () {
-      if (this.room.checkIns[0]) {
-        if (this.room.checkIns[0].user.length >= this.totalSteps()) {
+      if (this.room.checkIns.user) {
+        if (this.room.checkIns.user.length >= this.totalSteps()) {
           this.disableButtonToday = true
         }
       }
     },
     roomCapacityTomorrow: async function () {
-      if (this.room.checkInsTomorrow[0]) {
-        if (this.room.checkInsTomorrow[0].user.length >= this.totalSteps()) {
+      if (this.room.checkInsTomorrow.user) {
+        if (this.room.checkInsTomorrow.user.length >= this.totalSteps()) {
           this.disableButtonTomorrow = true
         }
       }
