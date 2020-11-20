@@ -16,10 +16,10 @@
     </b-row>
     <b-row class="button-row w-100">
       <b-col cols="6" @click="checkIn(currentDate)">
-        <covid-button :name="SignInButton" v-if="disableButtons"></covid-button>
+        <covid-button :name="SignInButton" :isDisabled="!disableButtons"></covid-button>
       </b-col>
       <b-col cols="6" @click="checkIn(dateTomorrow())">
-        <covid-button :name="SignInTomorrowButton" v-if="disableButtons"></covid-button>
+        <covid-button :name="SignInTomorrowButton" :isDisabled="!disableButtons"></covid-button>
       </b-col>
     </b-row>
   </div>
@@ -37,12 +37,13 @@ export default {
       room: {
         checkIns: []
       },
+      currentUser: undefined,
       completedSteps: 2,
       roomID: String,
       SignInButton: 'Sign In Today',
       SignInTomorrowButton: 'Sign In Tomorrow',
       currentDate: new Date().toISOString().slice(0, 10),
-      disableButtons: Boolean
+      disableButtons: false
     }
   },
   components: {
@@ -83,10 +84,14 @@ export default {
           })
         })
     },
+    getCurrentUser: async function () {
+      const currentUser = await userService.currentUser()
+      this.currentUser = currentUser
+    },
     isUserSignedIn: async function () {
-      const currentUserID = await userService.currentUser()
-      if (currentUserID != null) {
-        this.disableButtons = false
+      await this.getCurrentUser()
+      if (this.room.checkIns[0].user.some(userId => userId === this.currentUser.id)) {
+        this.disableButtons = true
       }
     },
     totalSteps: function () {
