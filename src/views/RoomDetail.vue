@@ -5,16 +5,17 @@
         <h2 class="my0">{{ this.room.roomName }}</h2>
       </b-col>
       <b-col cols="4" class="h-100 d-flex justify-content-center">
-        <radial-progress-bar :diameter="55" :completed-steps="this.room.checkIns.length" :total-steps="totalSteps()"
+        <radial-progress-bar v-if="this.room.checkIns[0]" :diameter="55" :completed-steps="this.room.checkIns[0].user.length" :total-steps="totalSteps()"
         :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent" startColor="#FFF" stopColor="#FFF" class="align-self-center">
           <b-row>
-            <p class="my-0">{{ this.room.checkIns.length }}</p>
+            <p v-if="this.room.checkIns[0]" class="my-0">{{ this.room.checkIns[0].user.length }}</p>
             <p class="my-0">/{{ totalSteps() }}</p>
           </b-row>
-        </radial-progress-bar><radial-progress-bar :diameter="55" :completed-steps="this.room.checkInsTomorrow.length" :total-steps="totalSteps()"
+        </radial-progress-bar>
+        <radial-progress-bar v-if="this.room.checkInsTomorrow[0]" :diameter="55" :completed-steps="this.room.checkInsTomorrow[0].user.length" :total-steps="totalSteps()"
         :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent" startColor="#FFF" stopColor="#FFF" class="align-self-center ml-2">
           <b-row>
-            <p class="my-0">{{ this.room.checkInsTomorrow.length }}</p>
+            <p v-if="this.room.checkInsTomorrow[0]" class="my-0">{{ this.room.checkInsTomorrow[0].user.length }}</p>
             <p class="my-0">/{{ totalSteps() }}</p>
           </b-row>
         </radial-progress-bar>
@@ -65,6 +66,8 @@ export default {
     await this.getRoomCheckInsTomorrow()
     await this.isUserSignedIn()
     await this.isUserSignedInTomorrow()
+    await this.roomCapacityToday()
+    await this.roomCapacityTomorrow()
   },
   methods: {
     getRoomKeyValuePairs: function () {
@@ -109,21 +112,31 @@ export default {
     },
     isUserSignedIn: async function () {
       const currentUser = await userService.currentUser()
-      if (this.room.checkIns[0] != null) {
+      if (this.room.checkIns[0]) {
         if (this.room.checkIns[0].user.some(userId => userId === currentUser.id)) {
           this.disableButtonToday = true
-        } else {
-          this.disableButtonToday = false
         }
       }
     },
     isUserSignedInTomorrow: async function () {
       const currentUser = await userService.currentUser()
-      if (this.room.checkInsTomorrow[0] != null) {
+      if (this.room.checkInsTomorrow[0]) {
         if (this.room.checkInsTomorrow[0].user.some(userId => userId === currentUser.id)) {
           this.disableButtonTomorrow = true
-        } else {
-          this.disableButtonTomorrow = false
+        }
+      }
+    },
+    roomCapacityToday: async function () {
+      if (this.room.checkIns[0]) {
+        if (this.room.checkIns[0].user.length >= this.totalSteps()) {
+          this.disableButtonToday = true
+        }
+      }
+    },
+    roomCapacityTomorrow: async function () {
+      if (this.room.checkInsTomorrow[0]) {
+        if (this.room.checkInsTomorrow[0].user.length >= this.totalSteps()) {
+          this.disableButtonTomorrow = true
         }
       }
     },
