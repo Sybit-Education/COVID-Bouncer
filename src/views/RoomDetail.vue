@@ -17,7 +17,7 @@
     <b-row>
       <b-col cols="12" class="mx-3 mt-4">
         <h3 class="font-weight-bold mb-3">Heute eingecheckt:</h3>
-        <div :key="user.key" v-for="user in checkIns" class="userList">
+        <div :key="user.key" v-for="user in checkedInUser" class="userList">
           <p class="mb-1">
             {{ user.firstName }}
             {{ user.lastName }}
@@ -45,7 +45,7 @@ export default {
   name: 'RoomDetail',
   data () {
     return {
-      checkIns: [],
+      checkedInUser: [],
       room: [],
       completedSteps: 2,
       roomID: String,
@@ -69,10 +69,10 @@ export default {
       .then(doc => {
         this.room = doc.data()
       })
-    await this.getRoomCheckIns()
+    await this.getRoomcheckedInUser()
   },
   methods: {
-    getRoomCheckIns: async function () {
+    getRoomcheckedInUser: async function () {
       await $db()
         .collection('Rooms/' + this.roomID + '/CheckIn')
         .where('date', '==', this.currentDate)
@@ -82,7 +82,7 @@ export default {
             const user = checkIn.data().user
             user.forEach(user => {
               user.get().then(snap => {
-                this.checkIns.push(snap.data())
+                this.checkedInUser.push(snap.data())
               })
             })
           })
