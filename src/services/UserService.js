@@ -1,5 +1,6 @@
 import { $db } from '@/services/firebase'
 import { configService } from '@/services/Config.service.js'
+import { roomService } from '@/services/RoomService'
 
 const COLLECTION_NAME = 'user'
 
@@ -80,6 +81,23 @@ class UserService {
   logout () {
     localStorage.removeItem('userId')
     this.user = null
+  }
+
+  async getSignedRoom (date) {
+    let myRoom
+    const currentUserID = await this.currentUser()
+    const userRef = await $db().doc('user/' + currentUserID.id)
+    const querySnapshot = await $db().collectionGroup('CheckIn').where('date', '==', date).get()
+    querySnapshot.forEach((doc) => {
+      const roomID = doc.ref.parent.parent.id
+      const user = doc.data().user
+      user.forEach(user => {
+        if (user.id === userRef.id) {
+          myRoom = roomID
+        }
+      })
+    })
+    return await roomService.getRoomByID(myRoom)
   }
 }
 
