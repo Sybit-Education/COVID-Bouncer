@@ -1,13 +1,22 @@
 <template>
   <div>
+    <b-row class="mb-4">
+      <b-col cols="12">
+      <h3 class="font-weight-bold">Mein Raum heute:</h3>
+      </b-col>
+      <b-col cols="12">
+        <router-link class="text-decoration-none" :to="{name:'RoomDetail', params: {location: room.roomData.location, building: room.roomData.building, roomID: room.roomID, roomName: room.roomData.roomName }}">
+        <p class="currentRoom text-center" >{{ room.roomData.roomName }}</p>
+        </router-link>
+      </b-col>
+      </b-row>
     <location-list></location-list>
   </div>
 </template>
 
 <script>
 import LocationList from '@/components/LocationList'
-import { $db } from '@/services/firebase'
-// import { userService } from '@/services/UserService'
+import { userService } from '@/services/UserService'
 
 export default {
   name: 'Home',
@@ -16,6 +25,7 @@ export default {
   },
   data () {
     return {
+      room: [],
       currentDate: new Date().toISOString().slice(0, 10)
     }
   },
@@ -24,21 +34,16 @@ export default {
   },
   methods: {
     getTodaysRoom: async function () {
-      // const currentUserID = await userService.currentUser()
-      // const userRef = await $db().doc('user/' + currentUserID)
-      const querySnapshot = await $db().collectionGroup('CheckIn').where('date', '==', this.currentDate).get()
-      querySnapshot.forEach((doc) => {
-        console.log(doc.ref.parent.parent.id)
-        /* const user = doc.data().user
-         user.forEach(user => {
-          user.get().then(snap => {
-            console.log(snap.data())
-            console.log(user.getParent().getParent())
-          })
-        }) */
-        console.log(doc.id, ' => ', doc.data())
-      })
+      this.room = await userService.getSignedRoom(this.currentDate)
     }
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.currentRoom
+  border: 2px solid black
+  border-radius: 4px
+  padding: .5rem 1rem
+  color: black
+</style>
