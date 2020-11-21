@@ -1,7 +1,7 @@
 <template>
   <b-col class="card">
     <b-row class="h-100">
-    <b-col cols="8" class="h-100 d-flex justify-content-center">
+    <b-col :cols="colNumber" class="h-100 d-flex justify-content-center">
     <h2 class="align-self-center">{{ name }}</h2>
     </b-col>
     <b-col v-if="occupancy" cols="4" class="h-100 d-flex justify-content-center">
@@ -26,11 +26,22 @@ export default {
   data: function () {
     return {
       occupancy: this.occupancyProp,
-      capacity: this.capacityProp
+      capacity: this.capacityProp,
+      colNumber: 12
     }
   },
   components: {
     RadialProgressBar
+  },
+  mounted () {
+    this.hasProgressBar()
+  },
+  methods: {
+    hasProgressBar: function () {
+      if (this.occupancy) {
+        this.colNumber = 8
+      }
+    }
   }
 }
 </script>
