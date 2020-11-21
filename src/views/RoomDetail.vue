@@ -14,6 +14,17 @@
         </radial-progress-bar>
       </b-col>
     </b-row>
+    <b-row>
+      <b-col cols="12" class="mx-3 mt-4">
+        <h3 class="font-weight-bold mb-3">Heute eingecheckt:</h3>
+        <div :key="user.key" v-for="user in checkIns" class="userList">
+          <p class="mb-1">
+            {{ user.firstName }}
+            {{ user.lastName }}
+          </p>
+        </div>
+      </b-col>
+    </b-row>
     <b-row class="button-row w-100">
       <b-col cols="6" @click="checkIn(currentDate)">
         <covid-button :name="SignInButton"></covid-button>
@@ -34,6 +45,7 @@ export default {
   name: 'RoomDetail',
   data () {
     return {
+      checkIns: [],
       room: [],
       completedSteps: 2,
       roomID: String,
@@ -49,17 +61,33 @@ export default {
   created () {
     this.roomID = this.$route.params.roomID
   },
-  mounted () {
-    const db = this.$firebase.firestore()
-    db
+  async mounted () {
+    await $db()
       .collection('Rooms')
       .doc(this.roomID)
       .get()
       .then(doc => {
         this.room = doc.data()
       })
+    await this.getRoomCheckIns()
   },
   methods: {
+    getRoomCheckIns: async function () {
+      await $db()
+        .collection('Rooms/' + this.roomID + '/CheckIn')
+        .where('date', '==', this.currentDate)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach((checkIn) => {
+            const user = checkIn.data().user
+            user.forEach(user => {
+              user.get().then(snap => {
+                this.checkIns.push(snap.data())
+              })
+            })
+          })
+        })
+    },
     totalSteps: function () {
       return parseInt(this.room.capacity)
     },
