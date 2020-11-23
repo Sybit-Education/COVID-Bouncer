@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-row class="mb-4">
+    <b-row v-if="room.roomID" class="mb-4">
       <b-col cols="12">
       <h3 class="font-weight-bold">Mein Raum heute:</h3>
       </b-col>
