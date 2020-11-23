@@ -5,18 +5,18 @@
         <h2 class="my0">{{ this.room.roomName }}</h2>
       </b-col>
       <b-col cols="4" class="h-100 d-flex justify-content-center">
-        <radial-progress-bar v-if="this.room.checkIns.user" :diameter="55" :completed-steps="this.room.checkIns.user.length" :total-steps="totalSteps()"
+        <radial-progress-bar :diameter="55" :completed-steps="roomOccupation()" :total-steps="roomCapacity()"
         :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent" startColor="#FFF" stopColor="#FFF" class="align-self-center">
           <b-row>
-            <p v-if="this.room.checkIns.user" class="my-0">{{ this.room.checkIns.user.length }}</p>
-            <p class="my-0">/{{ totalSteps() }}</p>
+            <p class="my-0">{{ roomOccupation() }}</p>
+            <p class="my-0">/{{ roomCapacity() }}</p>
           </b-row>
         </radial-progress-bar>
-        <radial-progress-bar v-if="this.room.checkInsTomorrow.user" :diameter="55" :completed-steps="this.room.checkInsTomorrow.user.length" :total-steps="totalSteps()"
+        <radial-progress-bar v-if="this.room.checkInsTomorrow.user" :diameter="55" :completed-steps="this.room.checkInsTomorrow.user.length" :total-steps="roomCapacity()"
         :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent" startColor="#FFF" stopColor="#FFF" class="align-self-center ml-2">
           <b-row>
             <p v-if="this.room.checkInsTomorrow.user" class="my-0">{{ this.room.checkInsTomorrow.user.length }}</p>
-            <p class="my-0">/{{ totalSteps() }}</p>
+            <p class="my-0">/{{ roomCapacity() }}</p>
           </b-row>
         </radial-progress-bar>
       </b-col>
@@ -86,9 +86,7 @@ export default {
     },
     getRoomCheckIns: async function () {
       await $db()
-        .collection('Rooms')
-        .doc(this.roomID)
-        .collection('CheckIn')
+        .collection('Rooms/' + this.roomID + '/CheckIn')
         .where('date', '==', this.currentDate)
         .get()
         .then(querySnapshot => {
@@ -99,9 +97,7 @@ export default {
     },
     getRoomCheckInsTomorrow: async function () {
       await $db()
-        .collection('Rooms')
-        .doc(this.roomID)
-        .collection('CheckIn')
+        .collection('Rooms/' + this.roomID + '/CheckIn')
         .where('date', '==', this.dateTomorrow())
         .get()
         .then(querySnapshot => {
@@ -113,32 +109,38 @@ export default {
     fetchUserIDList: async function () {
       if (this.room.checkIns.user) {
         this.room.checkIns.user.forEach(user => this.userIdList.todayIDList.push(user.id))
-      }
-      if (this.room.checkInsTomorrow.user) {
+      } if (this.room.checkInsTomorrow.user) {
         this.room.checkInsTomorrow.user.forEach(user => this.userIdList.tomorrowIDList.push(user.id))
       }
     },
     protectionToday: async function () {
       const currentUser = await userService.currentUser()
+      const isSignedIn = this.userIdList.todayIDList.some(userId => userId === currentUser.id)
+      let noCapacity = false
       if (this.room.checkIns.user) {
-        if (this.userIdList.todayIDList.some(userId => userId === currentUser.id)) {
-          this.disableButtonToday = true
-        } if (this.room.checkIns.user.length >= this.totalSteps()) {
-          this.disableButtonToday = true
-        }
+        noCapacity = this.room.checkIns.user.length >= this.roomCapacity()
+      } if (isSignedIn || noCapacity) {
+        this.disableButtonToday = true
       }
     },
     protectionTomorrow: async function () {
       const currentUser = await userService.currentUser()
+      const isSignedIn = this.userIdList.tomorrowIDList.some(userId => userId === currentUser.id)
+      let noCapacity = false
       if (this.room.checkInsTomorrow.user) {
-        if (this.userIdList.tomorrowIDList.some(userId => userId === currentUser.id)) {
-          this.disableButtonTomorrow = true
-        } if (this.room.checkInsTomorrow.user.length >= this.totalSteps()) {
-          this.disableButtonTomorrow = true
-        }
+        noCapacity = this.room.checkInsTomorrow.user.length >= this.roomCapacity()
+      } if (isSignedIn || noCapacity) {
+        this.disableButtonTomorrow = true
       }
     },
-    totalSteps: function () {
+    roomOccupation: function () {
+      if (this.room.checkIns.user) {
+        return this.room.checkIns.user.length
+      } else {
+        return 0
+      }
+    },
+    roomCapacity: function () {
       return parseInt(this.room.capacity)
     },
     dateTomorrow: function () {
