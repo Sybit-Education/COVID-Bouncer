@@ -115,13 +115,10 @@ export default {
     },
     protectionToday: async function () {
       let noCapacity = false
-      let isSignedIn = false
-      const getSignedRoom = await userService.getSignedRoom(this.currentDate)
+      const isSignedIn = await this.getSignedRoom(this.currentDate)
       if (this.room.checkIns.user) {
         if (this.room.checkIns.user.length >= this.roomCapacity()) {
           noCapacity = true
-        } if (getSignedRoom !== undefined) {
-          isSignedIn = true
         }
       } if (isSignedIn || noCapacity) {
         this.disableButtonToday = true
@@ -129,17 +126,22 @@ export default {
     },
     protectionTomorrow: async function () {
       let noCapacity = false
-      let isSignedIn = false
-      const getSignedRoom = await userService.getSignedRoom(this.dateTomorrow())
+      const isSignedIn = await this.getSignedRoom(this.dateTomorrow())
       if (this.room.checkInsTomorrow.user) {
         if (this.room.checkInsTomorrow.user.length >= this.roomCapacity()) {
           noCapacity = true
-        } if (getSignedRoom !== undefined) {
-          isSignedIn = true
         }
       } if (isSignedIn || noCapacity) {
         this.disableButtonTomorrow = true
       }
+    },
+    getSignedRoom: async function (date) {
+      let isSignedIn = false
+      const getSignedRoom = await userService.getSignedRoom(date)
+      if (getSignedRoom.roomID !== undefined) {
+        isSignedIn = true
+      }
+      return isSignedIn
     },
     roomOccupation: function () {
       if (this.room.checkIns.user) {
