@@ -1,11 +1,18 @@
 <template>
-  <b-col class="covid-button d-flex justify-content-center align-items-center">
-    <p class="my-0 button-text">{{ name }}</p>
-  </b-col>
+  <b-button class="covid-button px-3" :disabled="!isDisabled">
+    {{ name }}
+  </b-button>
 </template>
 <script>
 export default {
-  props: ['name']
+  props: {
+    name: {
+      type: String
+    },
+    isDisabled: {
+      type: Boolean
+    }
+  }
 }
 </script>
 <style lang="sass" scoped>
