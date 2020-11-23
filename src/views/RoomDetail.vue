@@ -69,8 +69,7 @@ export default {
     await this.getRoomCheckIns()
     await this.getRoomCheckInsTomorrow()
     await this.fetchUserIDList()
-    await this.protectionToday()
-    await this.protectionTomorrow()
+    await this.protection()
   },
   methods: {
     getRoomKeyValuePairs: async function () {
@@ -109,30 +108,28 @@ export default {
     fetchUserIDList: async function () {
       if (this.room.checkIns.user) {
         this.room.checkIns.user.forEach(user => this.userIdList.todayIDList.push(user.id))
-      } if (this.room.checkInsTomorrow.user) {
+      }
+      if (this.room.checkInsTomorrow.user) {
         this.room.checkInsTomorrow.user.forEach(user => this.userIdList.tomorrowIDList.push(user.id))
       }
     },
-    protectionToday: async function () {
-      let noCapacity = false
-      const isSignedIn = await this.getSignedRoom(this.currentDate)
-      if (this.room.checkIns.user) {
-        if (this.room.checkIns.user.length >= this.roomCapacity()) {
-          noCapacity = true
-        }
-      } if (isSignedIn || noCapacity) {
-        this.disableButtonToday = true
-      }
+    protection: async function () {
+      await this.signInProtection(this.currentDate, this.room.checkIns.user)
+      await this.signInProtection(this.dateTomorrow(), this.room.checkInsTomorrow.user)
     },
-    protectionTomorrow: async function () {
+    signInProtection: async function (date, room) {
       let noCapacity = false
-      const isSignedIn = await this.getSignedRoom(this.dateTomorrow())
-      if (this.room.checkInsTomorrow.user) {
-        if (this.room.checkInsTomorrow.user.length >= this.roomCapacity()) {
+      const isSignedIn = await this.getSignedRoom(date)
+      if (room) {
+        if (room.length >= this.roomCapacity()) {
           noCapacity = true
         }
       } if (isSignedIn || noCapacity) {
-        this.disableButtonTomorrow = true
+        if (room === this.room.checkIns.user) {
+          this.disableButtonToday = true
+        } else {
+          this.disableButtonTomorrow = true
+        }
       }
     },
     getSignedRoom: async function (date) {
