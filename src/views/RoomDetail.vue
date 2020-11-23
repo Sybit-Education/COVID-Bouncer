@@ -114,21 +114,29 @@ export default {
       }
     },
     protectionToday: async function () {
-      const currentUser = await userService.currentUser()
-      const isSignedIn = this.userIdList.todayIDList.some(userId => userId === currentUser.id)
       let noCapacity = false
+      let isSignedIn = false
+      const getSignedRoom = await userService.getSignedRoom(this.currentDate)
       if (this.room.checkIns.user) {
-        noCapacity = this.room.checkIns.user.length >= this.roomCapacity()
+        if (this.room.checkIns.user.length >= this.roomCapacity()) {
+          noCapacity = true
+        } if (getSignedRoom !== undefined) {
+          isSignedIn = true
+        }
       } if (isSignedIn || noCapacity) {
         this.disableButtonToday = true
       }
     },
     protectionTomorrow: async function () {
-      const currentUser = await userService.currentUser()
-      const isSignedIn = this.userIdList.tomorrowIDList.some(userId => userId === currentUser.id)
       let noCapacity = false
+      let isSignedIn = false
+      const getSignedRoom = await userService.getSignedRoom(this.dateTomorrow())
       if (this.room.checkInsTomorrow.user) {
-        noCapacity = this.room.checkInsTomorrow.user.length >= this.roomCapacity()
+        if (this.room.checkInsTomorrow.user.length >= this.roomCapacity()) {
+          noCapacity = true
+        } if (getSignedRoom !== undefined) {
+          isSignedIn = true
+        }
       } if (isSignedIn || noCapacity) {
         this.disableButtonTomorrow = true
       }
