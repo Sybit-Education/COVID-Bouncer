@@ -69,10 +69,8 @@ export default {
     await this.getRoomCheckIns()
     await this.getRoomCheckInsTomorrow()
     await this.fetchUserIDList()
-    await this.isUserSignedIn()
-    await this.isUserSignedInTomorrow()
-    await this.roomCapacityToday()
-    await this.roomCapacityTomorrow()
+    await this.protectionToday()
+    await this.protectionTomorrow()
   },
   methods: {
     getRoomKeyValuePairs: async function () {
@@ -120,32 +118,22 @@ export default {
         this.room.checkInsTomorrow.user.forEach(user => this.userIdList.tomorrowIDList.push(user.id))
       }
     },
-    isUserSignedIn: async function () {
+    protectionToday: async function () {
       const currentUser = await userService.currentUser()
       if (this.room.checkIns.user) {
         if (this.userIdList.todayIDList.some(userId => userId === currentUser.id)) {
           this.disableButtonToday = true
-        }
-      }
-    },
-    isUserSignedInTomorrow: async function () {
-      const currentUser = await userService.currentUser()
-      if (this.room.checkInsTomorrow.user) {
-        if (this.userIdList.tomorrowIDList.some(userId => userId === currentUser.id)) {
-          this.disableButtonTomorrow = true
-        }
-      }
-    },
-    roomCapacityToday: async function () {
-      if (this.room.checkIns.user) {
-        if (this.room.checkIns.user.length >= this.totalSteps()) {
+        } if (this.room.checkIns.user.length >= this.totalSteps()) {
           this.disableButtonToday = true
         }
       }
     },
-    roomCapacityTomorrow: async function () {
+    protectionTomorrow: async function () {
+      const currentUser = await userService.currentUser()
       if (this.room.checkInsTomorrow.user) {
-        if (this.room.checkInsTomorrow.user.length >= this.totalSteps()) {
+        if (this.userIdList.tomorrowIDList.some(userId => userId === currentUser.id)) {
+          this.disableButtonTomorrow = true
+        } if (this.room.checkInsTomorrow.user.length >= this.totalSteps()) {
           this.disableButtonTomorrow = true
         }
       }
