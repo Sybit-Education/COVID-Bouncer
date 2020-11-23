@@ -125,7 +125,7 @@ export default {
           noCapacity = true
         }
       } if (isSignedIn || noCapacity) {
-        if (room === this.room.checkIns.user) {
+        if (date === this.currentDate) {
           this.disableButtonToday = true
         } else {
           this.disableButtonTomorrow = true
