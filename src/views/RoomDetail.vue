@@ -52,7 +52,6 @@ export default {
   name: 'RoomDetail',
   data () {
     return {
-      checkedInUser: [],
       room: {
         checkIns: [],
         checkInsTomorrow: []
@@ -145,11 +144,7 @@ export default {
       return isSignedIn
     },
     roomOccupation: function () {
-      if (this.room.checkIns.length > 0) {
-        return this.room.checkIns.length
-      } else {
-        return 0
-      }
+      return this.room.checkIns.length
     },
     roomCapacity: function () {
       return parseInt(this.room.capacity)
