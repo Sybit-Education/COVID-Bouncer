@@ -5,11 +5,18 @@
         <h2 class="my0">{{ this.room.roomName }}</h2>
       </b-col>
       <b-col cols="4" class="h-100 d-flex justify-content-center">
-        <radial-progress-bar :diameter="55" :completed-steps="completedSteps" :total-steps="totalSteps()"
+        <radial-progress-bar :diameter="55" :completed-steps="roomOccupation()" :total-steps="roomCapacity()"
         :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent" startColor="#FFF" stopColor="#FFF" class="align-self-center">
           <b-row>
-            <p class="my-0">{{ completedSteps }}</p>
-            <p class="my-0">/{{ totalSteps() }}</p>
+            <p class="my-0">{{ roomOccupation() }}</p>
+            <p class="my-0">/{{ roomCapacity() }}</p>
+          </b-row>
+        </radial-progress-bar>
+        <radial-progress-bar v-if="this.room.checkInsTomorrow.user" :diameter="55" :completed-steps="this.room.checkInsTomorrow.user.length" :total-steps="roomCapacity()"
+        :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent" startColor="#FFF" stopColor="#FFF" class="align-self-center ml-2">
+          <b-row>
+            <p v-if="this.room.checkInsTomorrow.user" class="my-0">{{ this.room.checkInsTomorrow.user.length }}</p>
+            <p class="my-0">/{{ roomCapacity() }}</p>
           </b-row>
         </radial-progress-bar>
       </b-col>
@@ -17,7 +24,7 @@
     <b-row>
       <b-col cols="12" class="mx-3 mt-4">
         <h3 class="font-weight-bold mb-3">Heute eingecheckt:</h3>
-        <div :key="user.key" v-for="user in checkedInUser" class="userList">
+        <div :key="user.key" v-for="user in room.checkIns" class="userList">
           <p class="mb-1">
             {{ user.firstName }}
             {{ user.lastName }}
@@ -27,10 +34,10 @@
     </b-row>
     <b-row class="button-row w-100">
       <b-col cols="6" @click="checkIn(currentDate)">
-        <covid-button :name="SignInButton"></covid-button>
+        <covid-button :name="SignInButton" :isDisabled="!disableButtonToday"></covid-button>
       </b-col>
       <b-col cols="6" @click="checkIn(dateTomorrow())">
-        <covid-button :name="SignInTomorrowButton"></covid-button>
+        <covid-button :name="SignInTomorrowButton" :isDisabled="!disableButtonTomorrow"></covid-button>
       </b-col>
     </b-row>
   </div>
@@ -46,12 +53,16 @@ export default {
   data () {
     return {
       checkedInUser: [],
-      room: [],
-      completedSteps: 2,
+      room: {
+        checkIns: [],
+        checkInsTomorrow: []
+      },
       roomID: String,
       SignInButton: 'Sign In Today',
       SignInTomorrowButton: 'Sign In Tomorrow',
-      currentDate: new Date().toISOString().slice(0, 10)
+      currentDate: new Date().toISOString().slice(0, 10),
+      disableButtonToday: false,
+      disableButtonTomorrow: false
     }
   },
   components: {
@@ -62,17 +73,24 @@ export default {
     this.roomID = this.$route.params.roomID
   },
   async mounted () {
-    await $db()
-      .collection('Rooms')
-      .doc(this.roomID)
-      .get()
-      .then(doc => {
-        this.room = doc.data()
-      })
-    await this.getRoomcheckedInUser()
+    await this.getRoomKeyValuePairs()
+    await this.getRoomCheckIns()
+    await this.getRoomCheckInsTomorrow()
+    await this.protection()
   },
   methods: {
-    getRoomcheckedInUser: async function () {
+    getRoomKeyValuePairs: async function () {
+      await $db()
+        .collection('Rooms')
+        .doc(this.roomID)
+        .get()
+        .then(doc => {
+          this.room = doc.data()
+          this.room.checkIns = []
+          this.room.checkInsTomorrow = []
+        })
+    },
+    getRoomCheckIns: async function () {
       await $db()
         .collection('Rooms/' + this.roomID + '/CheckIn')
         .where('date', '==', this.currentDate)
@@ -82,13 +100,58 @@ export default {
             const user = checkIn.data().user
             user.forEach(user => {
               user.get().then(snap => {
-                this.checkedInUser.push(snap.data())
+                this.room.checkIns.push(snap.data())
               })
             })
           })
         })
     },
-    totalSteps: function () {
+    getRoomCheckInsTomorrow: async function () {
+      await $db()
+        .collection('Rooms/' + this.roomID + '/CheckIn')
+        .where('date', '==', this.dateTomorrow())
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach((checkIn) => {
+            this.room.checkInsTomorrow = checkIn.data()
+          })
+        })
+    },
+    protection: async function () {
+      await this.signInProtection(this.currentDate, this.room.checkIns)
+      await this.signInProtection(this.dateTomorrow(), this.room.checkInsTomorrow.user)
+    },
+    signInProtection: async function (date, room) {
+      let noCapacity = false
+      const isSignedIn = await this.getSignedRoom(date)
+      if (room) {
+        if (room.length >= this.roomCapacity()) {
+          noCapacity = true
+        }
+      } if (isSignedIn || noCapacity) {
+        if (date === this.currentDate) {
+          this.disableButtonToday = true
+        } else {
+          this.disableButtonTomorrow = true
+        }
+      }
+    },
+    getSignedRoom: async function (date) {
+      let isSignedIn = false
+      const getSignedRoom = await userService.getSignedRoom(date)
+      if (getSignedRoom.roomID !== undefined) {
+        isSignedIn = true
+      }
+      return isSignedIn
+    },
+    roomOccupation: function () {
+      if (this.room.checkIns.length > 0) {
+        return this.room.checkIns.length
+      } else {
+        return 0
+      }
+    },
+    roomCapacity: function () {
       return parseInt(this.room.capacity)
     },
     dateTomorrow: function () {
