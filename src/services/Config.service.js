@@ -1,6 +1,6 @@
 import { $db } from '@/services/firebase.js'
 
-const COLLECTION_NAME = 'config'
+const COLLECTION_NAME = 'Config'
 
 class ConfigService {
   fetchMasterPassword () {

@@ -2,7 +2,7 @@ import { $db } from '@/services/firebase'
 import { configService } from '@/services/Config.service.js'
 import { roomService } from '@/services/RoomService'
 
-const COLLECTION_NAME = 'user'
+const COLLECTION_NAME = 'User'
 
 class UserService {
   constructor () {
