@@ -1,5 +1,5 @@
-import { $db } from '@/services/firebase'
 import { configService } from '@/services/Config.service.js'
+import { $db } from '@/services/firebase'
 import { roomService } from '@/services/RoomService'
 
 const COLLECTION_NAME = 'User'
@@ -38,6 +38,7 @@ class UserService {
   }
 
   async fetchUserByInitials (initials) {
+    const users = []
     const response = await $db().collection(COLLECTION_NAME).where('initials', '==', initials).get()
     response.forEach(userDoc => {
       const user = {
@@ -46,8 +47,9 @@ class UserService {
         lastName: userDoc.data().lastName,
         initials: userDoc.data().initials
       }
-      return user
+      users.push(user)
     })
+    return users[0]
   }
 
   async fetchUserById (userId) {
