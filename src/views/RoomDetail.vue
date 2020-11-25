@@ -21,6 +21,17 @@
         </radial-progress-bar>
       </b-col>
     </b-row>
+    <b-row>
+      <b-col cols="12" class="mx-3 mt-4">
+        <h3 class="font-weight-bold mb-3">Heute eingecheckt:</h3>
+        <div :key="user.key" v-for="user in room.checkIns" class="userList">
+          <p class="mb-1">
+            {{ user.firstName }}
+            {{ user.lastName }}
+          </p>
+        </div>
+      </b-col>
+    </b-row>
     <b-row class="button-row w-100">
       <b-col cols="6" @click="checkIn(currentDate)">
         <covid-button :name="SignInButton" :isDisabled="!disableButtonToday"></covid-button>
@@ -45,10 +56,6 @@ export default {
         checkIns: [],
         checkInsTomorrow: []
       },
-      userIdList: {
-        todayIDList: [],
-        tomorrowIDList: []
-      },
       roomID: String,
       SignInButton: 'Sign In Today',
       SignInTomorrowButton: 'Sign In Tomorrow',
@@ -68,7 +75,6 @@ export default {
     await this.getRoomKeyValuePairs()
     await this.getRoomCheckIns()
     await this.getRoomCheckInsTomorrow()
-    await this.fetchUserIDList()
     await this.protection()
   },
   methods: {
@@ -90,7 +96,12 @@ export default {
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach((checkIn) => {
-            this.room.checkIns = checkIn.data()
+            const user = checkIn.data().user
+            user.forEach(user => {
+              user.get().then(snap => {
+                this.room.checkIns.push(snap.data())
+              })
+            })
           })
         })
     },
@@ -105,16 +116,8 @@ export default {
           })
         })
     },
-    fetchUserIDList: async function () {
-      if (this.room.checkIns.user) {
-        this.room.checkIns.user.forEach(user => this.userIdList.todayIDList.push(user.id))
-      }
-      if (this.room.checkInsTomorrow.user) {
-        this.room.checkInsTomorrow.user.forEach(user => this.userIdList.tomorrowIDList.push(user.id))
-      }
-    },
     protection: async function () {
-      await this.signInProtection(this.currentDate, this.room.checkIns.user)
+      await this.signInProtection(this.currentDate, this.room.checkIns)
       await this.signInProtection(this.dateTomorrow(), this.room.checkInsTomorrow.user)
     },
     signInProtection: async function (date, room) {
@@ -141,11 +144,7 @@ export default {
       return isSignedIn
     },
     roomOccupation: function () {
-      if (this.room.checkIns.user) {
-        return this.room.checkIns.user.length
-      } else {
-        return 0
-      }
+      return this.room.checkIns.length
     },
     roomCapacity: function () {
       return parseInt(this.room.capacity)
