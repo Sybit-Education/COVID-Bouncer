@@ -1,13 +1,11 @@
 <template>
   <b-col class="card">
     <b-row class="h-100">
-    <b-col :cols="colNumber" class="h-100 d-flex justify-content-center">
-    <h2 class="align-self-center">{{ name }}</h2>
-    </b-col>
-    <b-col v-if="occupancy" cols="4" class="h-100 d-flex justify-content-center">
-      <radial-progress-bar :diameter="55" :completed-steps="occupancy" :total-steps="capacity"
+    <b-col cols="12" class="d-flex justify-content-center align-items-center">
+    <h2 class="m-0 p-0">{{ name }}</h2>
+      <radial-progress-bar v-if="occupancy" :diameter="55" :completed-steps="occupancy" :total-steps="capacity"
         :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent"
-        startColor="#000" stopColor="#000" class="align-self-center">
+        startColor="#000" stopColor="#000" class="radial-progress-bar">
           <b-row>
             <p class="my-0">{{ occupancy }} / </p>
             <p class="my-0">{{ capacity }}</p>
@@ -15,7 +13,7 @@
         </radial-progress-bar>
     </b-col>
     </b-row>
-  </b-col>
+    </b-col>
 </template>
 
 <script>
@@ -26,22 +24,11 @@ export default {
   data: function () {
     return {
       occupancy: this.occupancyProp,
-      capacity: this.capacityProp,
-      colNumber: 12
+      capacity: this.capacityProp
     }
   },
   components: {
     RadialProgressBar
-  },
-  mounted () {
-    this.hasProgressBar()
-  },
-  methods: {
-    hasProgressBar: function () {
-      if (this.occupancy) {
-        this.colNumber = 8
-      }
-    }
   }
 }
 </script>
@@ -53,4 +40,8 @@ export default {
   border-radius: 8px
   margin-bottom: 2rem
   color: black
+
+.radial-progress-bar
+  position: absolute
+  right: 10%
 </style>

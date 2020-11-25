@@ -1,13 +1,15 @@
 <template>
   <b-row v-if="showHeader" id="nav" class=" main-nav">
-    <b-col cols="2" class="align-self-center text-center">
+    <b-col class="align-self-center" cols="2">
       <div v-if="showBackButton">
         <div @click="$router.go(-1)" class="sy-color">
           <font-awesome-icon :icon="['fas', 'chevron-left']" />
         </div>
       </div>
     </b-col>
-    <b-col cols="8" class="text-center align-self-center"><h1 class="my0 ">Rooms</h1></b-col>
+    <b-col cols="8" class="text-center align-self-center">
+      <h1 class="pt-2 my-0">Rooms</h1>
+    </b-col>
     <b-col cols="2"></b-col>
   </b-row>
 </template>
