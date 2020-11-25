@@ -86,7 +86,7 @@ class UserService {
   async getSignedRoom (date) {
     let myRoom
     const currentUserID = await this.currentUser()
-    const userRef = await $db().doc('user/' + currentUserID.id)
+    const userRef = await $db().doc('User/' + currentUserID.id)
     const querySnapshot = await $db().collectionGroup('CheckIn').where('date', '==', date).get()
     querySnapshot.forEach((doc) => {
       const roomID = doc.ref.parent.parent.id

@@ -158,7 +158,7 @@ export default {
       const currentUserID = await userService.currentUser()
         .then(user => user.id)
       const db = await $db().collection('Rooms/' + this.roomID + '/CheckIn')
-      const userRef = await $db().doc('user/' + currentUserID)
+      const userRef = await $db().doc('User/' + currentUserID)
       const doc = await db.doc(currentDate).get().then(doc => doc.data())
       if (doc === undefined) {
         db.doc(currentDate)
