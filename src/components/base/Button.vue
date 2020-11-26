@@ -10,7 +10,8 @@ export default {
       type: String
     },
     isDisabled: {
-      type: Boolean
+      type: Boolean,
+      default: false
     }
   }
 }

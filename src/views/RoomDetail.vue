@@ -33,11 +33,17 @@
       </b-col>
     </b-row>
     <b-row class="button-row w-100">
-      <b-col cols="6" @click="checkIn(currentDate)">
-        <covid-button :name="SignInButton" :isDisabled="disableButtonToday"></covid-button>
+      <b-col v-if="notSignedInToday" cols="6" @click="checkIn(currentDate)">
+        <covid-button :name="SignInButtonToday" :isDisabled="disableButtonToday"></covid-button>
       </b-col>
-      <b-col cols="6" @click="checkIn(dateTomorrow)">
-        <covid-button :name="SignInTomorrowButton" :isDisabled="disableButtonTomorrow"></covid-button>
+      <b-col v-else cols="6" @click="checkout(currentDate)">
+        <covid-button :name="SignOutButtonToday"></covid-button>
+      </b-col>
+      <b-col v-if="notSignedInTomorrow" cols="6" @click="checkIn(dateTomorrow)">
+        <covid-button :name="SignInButtonTomorrow" :isDisabled="disableButtonTomorrow"></covid-button>
+      </b-col>
+            <b-col v-else cols="6" @click="checkout(dateTomorrow)">
+        <covid-button :name="SignOutButtonTomorrow"></covid-button>
       </b-col>
     </b-row>
   </div>
@@ -63,11 +69,15 @@ export default {
       checkInsToday: [],
       checkInsTomorrow: [],
       roomID: String,
-      SignInButton: 'Sign In Today',
-      SignInTomorrowButton: 'Sign In Tomorrow',
+      SignInButtonToday: 'Sign In Today',
+      SignInButtonTomorrow: 'Sign In Tomorrow',
+      SignOutButtonToday: 'Sign Out Today',
+      SignOutButtonTomorrow: 'Sign Out Tomorrow',
       currentDate: new Date().toISOString().slice(0, 10),
       disableButtonToday: true,
-      disableButtonTomorrow: true
+      disableButtonTomorrow: true,
+      notSignedInToday: true,
+      notSignedInTomorrow: true
     }
   },
   created () {
@@ -78,6 +88,8 @@ export default {
     await this.getRoomCheckIns()
     await this.getRoomCheckInsTomorrow()
     await this.protection()
+    this.notSignedInToday = await this.isSignedtoCurrentRoom(this.currentDate)
+    this.notSignedInTomorrow = await this.isSignedtoCurrentRoom(this.dateTomorrow)
   },
   computed: {
     roomOccupation: function () {
@@ -157,6 +169,10 @@ export default {
       }
       return isSignedIn
     },
+    isSignedtoCurrentRoom: async function (date) {
+      const room = await userService.getSignedRoom(date)
+      return !(room.roomID === this.roomID)
+    },
     checkIn: async function (currentDate) {
       const currentUserID = await userService.currentUser()
         .then(user => user.id)
@@ -208,6 +224,17 @@ export default {
             )
         }
       }
+    },
+    checkout: async function (date) {
+      const currentUserID = await userService.currentUser()
+        .then(user => user.id)
+      const db = await $db().doc('Rooms/' + this.roomID + '/CheckIn/' + date)
+      const userRef = await $db().doc('User/' + currentUserID)
+      db.update({
+        user: FieldValue.arrayRemove(userRef)
+      }).then(
+        this.notSignedInToday = true
+      )
     }
   }
 }
