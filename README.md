@@ -82,7 +82,7 @@ https://www.youtube.com/watch?v=a-0W40NM0dI
 
 ## Manually deployment
 ```javascript
-npm deploy
+npm run deploy
 ```
 
 ## License
