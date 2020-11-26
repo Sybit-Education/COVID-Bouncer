@@ -11,6 +11,7 @@ import Notifications from 'vue-notification'
 //  Firebase
 import firebase from 'firebase'
 import * as fbService from './services/firebase'
+import { firestorePlugin } from 'vuefire'
 
 //  Fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -23,6 +24,8 @@ Vue.use(Notifications, { max: 5 })
 
 //  Firebase
 Vue.prototype.$firebase = firebase
+
+Vue.use(firestorePlugin)
 
 fbService.fBInit()
 
