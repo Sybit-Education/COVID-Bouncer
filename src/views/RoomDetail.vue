@@ -34,13 +34,13 @@
     </b-row>
     <b-row class="button-row w-100">
       <b-col v-if="notSignedInToday" cols="6" @click="checkIn(currentDate)">
-        <covid-button :name="SignInButtonToday" :isDisabled="!disableButtonToday"></covid-button>
+        <covid-button :name="SignInButtonToday" :isDisabled="disableButtonToday"></covid-button>
       </b-col>
       <b-col v-else cols="6" @click="checkout(currentDate)">
         <covid-button :name="SignOutButtonToday"></covid-button>
       </b-col>
       <b-col v-if="notSignedInTomorrow" cols="6" @click="checkIn(dateTomorrow)">
-        <covid-button :name="SignInButtonTomorrow" :isDisabled="!disableButtonTomorrow"></covid-button>
+        <covid-button :name="SignInButtonTomorrow" :isDisabled="disableButtonTomorrow"></covid-button>
       </b-col>
             <b-col v-else cols="6" @click="checkout(dateTomorrow)">
         <covid-button :name="SignOutButtonTomorrow"></covid-button>
@@ -74,8 +74,8 @@ export default {
       SignOutButtonToday: 'Sign Out Today',
       SignOutButtonTomorrow: 'Sign Out Tomorrow',
       currentDate: new Date().toISOString().slice(0, 10),
-      disableButtonToday: false,
-      disableButtonTomorrow: false,
+      disableButtonToday: true,
+      disableButtonTomorrow: true,
       notSignedInToday: true,
       notSignedInTomorrow: true
     }
@@ -146,18 +146,18 @@ export default {
       await this.signInProtection(this.currentDate, this.checkInsToday)
       await this.signInProtection(this.dateTomorrow, this.checkInsTomorrow.user)
     },
-    signInProtection: async function (date, room) {
+    signInProtection: async function (date, checkIns) {
       let noCapacity = false
       const isSignedIn = await this.getSignedRoom(date)
-      if (room) {
-        if (room.length >= this.capacity) {
+      if (checkIns) {
+        if (checkIns.length >= this.capacity) {
           noCapacity = true
         }
-      } if (isSignedIn || noCapacity) {
+      } if (!(isSignedIn || noCapacity)) {
         if (date === this.currentDate) {
-          this.disableButtonToday = true
+          this.disableButtonToday = false
         } else {
-          this.disableButtonTomorrow = true
+          this.disableButtonTomorrow = false
         }
       }
     },
