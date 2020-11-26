@@ -29,6 +29,7 @@ export default {
       .collection('Rooms')
       .where('location', '==', this.locationName)
       .where('building', '==', this.buildingName)
+      .orderBy('roomName', 'asc')
       .get()
       .then(snap => {
         const rooms = []

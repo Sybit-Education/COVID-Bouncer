@@ -25,6 +25,7 @@ export default {
     const db = this.$firebase.firestore()
     db
       .collection('Rooms')
+      .orderBy('location', 'asc')
       .get()
       .then(snap => {
         const rooms = []
