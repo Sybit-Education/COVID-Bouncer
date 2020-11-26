@@ -9,7 +9,7 @@ import './assets/app.sass'
 import Notifications from 'vue-notification'
 
 //  Firebase
-import firebase from 'firebase'
+import firebase from 'firebase/app'
 import * as fbService from './services/firebase'
 import { firestorePlugin } from 'vuefire'
 

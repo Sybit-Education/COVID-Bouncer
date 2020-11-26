@@ -81,6 +81,10 @@ firebase login
 https://www.youtube.com/watch?v=a-0W40NM0dI
 
 ## Manually deployment
+### Serve before deploy
+```javascript
+firebase serve
+```
 ```javascript
 npm run deploy
 ```

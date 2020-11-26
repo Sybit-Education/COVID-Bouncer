@@ -11,7 +11,7 @@
 
 <script>
 import Card from '@/components/base/Card'
-import { roomService } from '@/services/Room.service'
+import { roomService } from '@/services/RoomService'
 import { $db } from '@/services/firebase'
 
 export default {

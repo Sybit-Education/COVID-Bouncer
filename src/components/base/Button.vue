@@ -1,5 +1,5 @@
 <template>
-  <b-button class="covid-button px-3" :disabled="!isDisabled">
+  <b-button class="covid-button px-3" :disabled="isDisabled">
     {{ name }}
   </b-button>
 </template>
@@ -10,7 +10,8 @@ export default {
       type: String
     },
     isDisabled: {
-      type: Boolean
+      type: Boolean,
+      default: false
     }
   }
 }
