@@ -7,7 +7,7 @@ module.exports = {
     appleMobileWebAppStatusBarStyle: 'black',
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
-      swSrc: '/src/registerServiceWorker.js'
+      swSrc: 'src/registerServiceWorker.js'
     },
     manifestOptions: {
       short_name: 'COVID-Bouncer'
