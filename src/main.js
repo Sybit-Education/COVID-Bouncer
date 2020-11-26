@@ -23,9 +23,8 @@ Vue.use(BootstrapVue)
 Vue.use(Notifications, { max: 5 })
 
 //  Firebase
-Vue.prototype.$firebase = firebase
-
 Vue.use(firestorePlugin)
+Vue.prototype.$firebase = firebase
 
 fbService.fBInit()
 

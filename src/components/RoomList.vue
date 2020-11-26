@@ -12,6 +12,7 @@
 <script>
 import Card from '@/components/base/Card'
 import { roomService } from '@/services/Room.service'
+import { $db } from '@/services/firebase'
 
 export default {
   props: ['buildingName', 'locationName'],
@@ -24,8 +25,7 @@ export default {
     }
   },
   async mounted () {
-    const db = await this.$firebase.firestore()
-    db
+    $db()
       .collection('Rooms')
       .where('location', '==', this.locationName)
       .where('building', '==', this.buildingName)
