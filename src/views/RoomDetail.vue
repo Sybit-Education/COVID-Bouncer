@@ -34,10 +34,10 @@
     </b-row>
     <b-row class="button-row w-100">
       <b-col cols="6" @click="checkIn(currentDate)">
-        <covid-button :name="SignInButton" :isDisabled="!disableButtonToday"></covid-button>
+        <covid-button :name="SignInButton" :isDisabled="disableButtonToday"></covid-button>
       </b-col>
       <b-col cols="6" @click="checkIn(dateTomorrow)">
-        <covid-button :name="SignInTomorrowButton" :isDisabled="!disableButtonTomorrow"></covid-button>
+        <covid-button :name="SignInTomorrowButton" :isDisabled="disableButtonTomorrow"></covid-button>
       </b-col>
     </b-row>
   </div>
@@ -66,8 +66,8 @@ export default {
       SignInButton: 'Sign In Today',
       SignInTomorrowButton: 'Sign In Tomorrow',
       currentDate: new Date().toISOString().slice(0, 10),
-      disableButtonToday: false,
-      disableButtonTomorrow: false
+      disableButtonToday: true,
+      disableButtonTomorrow: true
     }
   },
   created () {
@@ -134,18 +134,18 @@ export default {
       await this.signInProtection(this.currentDate, this.checkInsToday)
       await this.signInProtection(this.dateTomorrow, this.checkInsTomorrow.user)
     },
-    signInProtection: async function (date, room) {
+    signInProtection: async function (date, checkIns) {
       let noCapacity = false
       const isSignedIn = await this.getSignedRoom(date)
-      if (room) {
-        if (room.length >= this.capacity) {
+      if (checkIns) {
+        if (checkIns.length >= this.capacity) {
           noCapacity = true
         }
-      } if (isSignedIn || noCapacity) {
+      } if (!(isSignedIn || noCapacity)) {
         if (date === this.currentDate) {
-          this.disableButtonToday = true
+          this.disableButtonToday = false
         } else {
-          this.disableButtonTomorrow = true
+          this.disableButtonTomorrow = false
         }
       }
     },
