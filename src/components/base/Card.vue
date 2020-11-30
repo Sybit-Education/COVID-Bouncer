@@ -43,5 +43,6 @@ export default {
 
 .radial-progress-bar
   position: absolute
-  right: 10%
+  right: 1rem
+  top: 1rem
 </style>
