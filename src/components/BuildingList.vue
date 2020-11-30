@@ -10,6 +10,7 @@
 
 <script>
 import Card from '@/components/base/Card'
+import { $db } from '@/services/firebase'
 
 export default {
   props: ['locationName'],
@@ -22,10 +23,10 @@ export default {
     }
   },
   mounted () {
-    const db = this.$firebase.firestore()
-    db
+    $db()
       .collection('Rooms')
       .where('location', '==', this.locationName)
+      .orderBy('building', 'asc')
       .get()
       .then(snap => {
         const rooms = []

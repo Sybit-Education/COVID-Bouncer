@@ -16,15 +16,15 @@ on some special things. For this situation, we track in Excel sheets where we pl
 1. Reduce the amount of peoples within a room
 2. Track the contacts
 
-## Idea
+## Features
 
-The idea of this app is now to track and log the room occupancy by progressive web app using
+The feature of this app is now to track and log the room occupancy by progressive web app using
 QR codes:
 
-* Scan QR code next to the door (or select manually) of the bureau to check in
-* Scan QR code to reserve a place for the next day
-* Track the lists for 14 days
-* Add and edit rooms with their capacity
+* Scan QR code next to the door (or select manually) of the bureau to check in (In work)
+* Scan QR code to reserve a place for the next day (In work)
+* Track the lists for 14 days (Done)
+* Add and edit rooms with their capacity (Done)
 
 ## Solution
 
@@ -67,8 +67,27 @@ VUE_APP_FIREBASE_MESAGING_SENDER_ID="xxx"
 VUE_APP_FIREBASE_APP_ID="xxxx"
 VUE_APP_FIREBASE_MEASUREMENT_ID="xxxx"
 ```
-
 You will get the values if you create a web application for Google Firestore.
+
+## Deployment setup
+### Before 
+```
+npm install -g firebase-tools
+```
+```
+firebase login
+```
+### Deploying a Vue Site with Firebase Hosting
+https://www.youtube.com/watch?v=a-0W40NM0dI
+
+## Manually deployment
+### Serve before deploy
+```javascript
+firebase serve
+```
+```javascript
+npm run deploy
+```
 
 ## License
 
