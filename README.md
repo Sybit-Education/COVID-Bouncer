@@ -83,7 +83,7 @@ https://www.youtube.com/watch?v=a-0W40NM0dI
 ## Manually deployment
 ### Serve before deploy
 ```javascript
-firebase serve
+npm run test-deploy
 ```
 ```javascript
 npm run deploy
