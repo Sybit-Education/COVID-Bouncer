@@ -5,7 +5,7 @@
         <h2 class="my0">{{ roomName }}</h2>
       </b-col>
       <b-col cols="4" class="h-100 d-flex justify-content-center">
-        <radial-progress-bar :diameter="55" :completed-steps="roomOccupation" :total-steps="capacity"
+        <radial-progress-bar v-if="loaded" :diameter="55" :completed-steps="roomOccupation" :total-steps="capacity"
         :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent" startColor="#FFF" stopColor="#FFF" class="align-self-center">
           <b-row>
             <p class="my-0">{{ roomOccupation }}</p>
@@ -25,7 +25,7 @@
       <b-col cols="12" class="mx-3 mt-4">
         <h3 class="font-weight-bold mb-3">Heute eingecheckt:</h3>
           <div v-for="user in checkInsToday" :key="user.key" class="userList">
-            <p class="mb-1">
+            <p v-if="loaded" class="mb-1">
               {{ user.firstName }}
               {{ user.lastName }}
             </p>
