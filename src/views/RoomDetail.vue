@@ -32,7 +32,12 @@
           </div>
       </b-col>
     </b-row>
-    <b-row class="button-row w-100">
+    <b-row v-if="!loaded">
+      <b-col class="d-flex justify-content-center mb-3">
+        <b-spinner label="Loading..."></b-spinner>
+      </b-col>
+    </b-row>
+    <b-row v-else class="button-row w-100">
       <b-col v-if="notSignedInToday" cols="6" @click="checkIn(currentDate)">
         <covid-button :name="SignInButtonToday" :isDisabled="disableButtonToday"></covid-button>
       </b-col>
@@ -77,7 +82,8 @@ export default {
       disableButtonToday: true,
       disableButtonTomorrow: true,
       notSignedInToday: true,
-      notSignedInTomorrow: true
+      notSignedInTomorrow: true,
+      loaded: false
     }
   },
   created () {
@@ -155,8 +161,10 @@ export default {
         }
       } if (!(isSignedIn || noCapacity)) {
         if (date === this.currentDate) {
+          this.loaded = true
           this.disableButtonToday = false
         } else {
+          this.loaded = true
           this.disableButtonTomorrow = false
         }
       }
