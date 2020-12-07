@@ -96,6 +96,7 @@ export default {
     await this.protection()
     this.notSignedInToday = await this.isSignedtoCurrentRoom(this.currentDate)
     this.notSignedInTomorrow = await this.isSignedtoCurrentRoom(this.dateTomorrow)
+    this.setLoaded()
   },
   computed: {
     roomOccupation: function () {
@@ -161,10 +162,8 @@ export default {
         }
       } if (!(isSignedIn || noCapacity)) {
         if (date === this.currentDate) {
-          this.loaded = true
           this.disableButtonToday = false
         } else {
-          this.loaded = true
           this.disableButtonTomorrow = false
         }
       }
@@ -180,6 +179,9 @@ export default {
     isSignedtoCurrentRoom: async function (date) {
       const room = await userService.getSignedRoom(date)
       return !(room.roomID === this.roomID)
+    },
+    setLoaded: function () {
+      this.loaded = true
     },
     checkIn: async function (currentDate) {
       const currentUserID = await userService.currentUser()
