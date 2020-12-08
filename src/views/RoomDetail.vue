@@ -5,7 +5,7 @@
         <h2 class="my0">{{ roomName }}</h2>
       </b-col>
       <b-col cols="4" class="h-100 d-flex justify-content-center">
-        <radial-progress-bar :diameter="55" :completed-steps="roomOccupation" :total-steps="capacity"
+        <radial-progress-bar v-if="loaded" :diameter="55" :completed-steps="roomOccupation" :total-steps="capacity"
         :strokeWidth="5" :innerStrokeWidth="5" innerStrokeColor="transparent" startColor="#FFF" stopColor="#FFF" class="align-self-center">
           <b-row>
             <p class="my-0">{{ roomOccupation }}</p>
@@ -25,14 +25,19 @@
       <b-col cols="12" class="mx-3 mt-4">
         <h3 class="font-weight-bold mb-3">Heute eingecheckt:</h3>
           <div v-for="user in checkInsToday" :key="user.key" class="userList">
-            <p class="mb-1">
+            <p v-if="loaded" class="mb-1">
               {{ user.firstName }}
               {{ user.lastName }}
             </p>
           </div>
       </b-col>
     </b-row>
-    <b-row class="button-row w-100">
+    <b-row v-if="!loaded">
+      <b-col class="d-flex justify-content-center mb-3">
+        <b-spinner label="Loading..."></b-spinner>
+      </b-col>
+    </b-row>
+    <b-row v-else class="button-row w-100">
       <b-col v-if="notSignedInToday" cols="6" @click="checkIn(currentDate)">
         <covid-button :name="SignInButtonToday" :isDisabled="disableButtonToday"></covid-button>
       </b-col>
@@ -77,7 +82,8 @@ export default {
       disableButtonToday: true,
       disableButtonTomorrow: true,
       notSignedInToday: true,
-      notSignedInTomorrow: true
+      notSignedInTomorrow: true,
+      loaded: false
     }
   },
   created () {
@@ -90,6 +96,7 @@ export default {
     await this.protection()
     this.notSignedInToday = await this.isSignedtoCurrentRoom(this.currentDate)
     this.notSignedInTomorrow = await this.isSignedtoCurrentRoom(this.dateTomorrow)
+    this.setLoaded()
   },
   computed: {
     roomOccupation: function () {
@@ -172,6 +179,9 @@ export default {
     isSignedtoCurrentRoom: async function (date) {
       const room = await userService.getSignedRoom(date)
       return !(room.roomID === this.roomID)
+    },
+    setLoaded: function () {
+      this.loaded = true
     },
     checkIn: async function (currentDate) {
       const currentUserID = await userService.currentUser()
