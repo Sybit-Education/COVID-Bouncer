@@ -63,14 +63,14 @@ VUE_APP_FIREBASE_AUTH_DOMAIN="xxxx"
 VUE_APP_FIREBASE_DATABASE_URL="xxx"
 VUE_APP_FIREBASE_PROJECT_ID="xxx"
 VUE_APP_FIREBASE_STORAGE_BUCKET="xxxx"
-VUE_APP_FIREBASE_MESAGING_SENDER_ID="xxx"
+VUE_APP_FIREBASE_MESSAGING_SENDER_ID="xxx"
 VUE_APP_FIREBASE_APP_ID="xxxx"
 VUE_APP_FIREBASE_MEASUREMENT_ID="xxxx"
 ```
 You will get the values if you create a web application for Google Firestore.
 
 ## Deployment setup
-### Before 
+### Before
 ```
 npm install -g firebase-tools
 ```
