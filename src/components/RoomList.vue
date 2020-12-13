@@ -1,9 +1,11 @@
 <template>
   <div>
     <div :key="room.key" v-for="room in rooms">
-      <router-link class="text-decoration-none" :to="{name:'RoomDetail', params: {location: locationName, building: buildingName, roomID: room.id, roomName: room.roomName }}">
-        <card :name="room.roomName" :occupancyProp=room.occupancy :capacityProp="room.capacity">
-        </card>
+      <router-link class="text-decoration-none"
+        :to="{name:'RoomDetail', params: {location: locationName, building: buildingName, roomID: room.id, roomName: room.roomName }}">
+          <card :name="room.roomName"
+            :occupancyProp=room.occupancy
+            :capacityProp="room.capacity" />
       </router-link>
       </div>
   </div>

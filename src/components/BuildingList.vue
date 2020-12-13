@@ -1,10 +1,11 @@
 <template>
   <div>
     <div :key="building.key" v-for="building in buildings">
-      <router-link style="text-decoration: none" :to="{name:'Rooms', params: {location: locationName, building: building}}">
-      <card :name=building></card>
+      <router-link style="text-decoration: none"
+        :to="{name:'Rooms', params: {location: locationName, building: building}}">
+        <card :name=building></card>
       </router-link>
-      </div>
+    </div>
   </div>
 </template>
 

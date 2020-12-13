@@ -1,7 +1,8 @@
 <template>
   <div>
     <div :key="location.key" v-for="location in locations">
-      <router-link style="text-decoration: none" :to="{name:'Buildings', params: {location: location}}">
+      <router-link style="text-decoration: none"
+        :to="{name:'Buildings', params: {location: location}}">
         <card :name=location></card>
       </router-link>
     </div>
